@@ -1,0 +1,41 @@
+﻿@model SeguridadWebv2.Models.CrearTareaViewModel
+@{
+    ViewBag.Title = "Alta de Tareas";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Alta de Tareas</h2>
+@Html.AntiForgeryToken()
+@using (Html.BeginForm("Create", "Tareas", FormMethod.Post))
+{
+    <div class="row">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ProfesionID, new { @class = "col-md-1 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ProfesionID", (SelectList)ViewBag.ProfesionID, "Seleccionar Profesión", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProfesionID, "", new { @class = "text-danger" })
+                 </div>
+        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.tarea, new { @class = "col-md-1 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.tarea, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.tarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <input type="submit" value="Aceptar" class="btn btn-success" />
+                    @Html.ActionLink("Cancelar", "Index", "Tareas", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

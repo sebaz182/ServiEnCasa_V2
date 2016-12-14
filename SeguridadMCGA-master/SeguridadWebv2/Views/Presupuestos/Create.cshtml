@@ -1,0 +1,86 @@
+﻿@model SeguridadWebv2.Models.GeneralPresupuestoVM
+@{
+    ViewBag.Title = "Responder Presupuesto";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+
+<h2>Crear Presupuesto</h2>
+@using (Html.BeginForm("Create", "Presupuestos", FormMethod.Post))
+{
+ @Html.AntiForgeryToken()
+<div class="container">
+    <div class="row">
+        @Html.HiddenFor(model => model.CrearPrespuesto.idSolicitud, new { @Value = Model.Solicitud.Id_Solicitud})
+        <div class="col-md-12">
+            @if (Model.Solicitud != null)
+            {
+                <div class="col-md-8">
+                    <div class="panel panel-danger">
+                        <div class="panel-body">
+                            <div class="col-md-3">
+                                <img src="@Url.Content(Model.Solicitud.Foto.ToString())" class="img-responsive" />
+                            </div>
+                            <div class="col-md-5">
+                                <div class="header">
+                                    <h4 style="color: #3333FF">Usuario: @Model.Solicitud.Usuarios.Nombre</h4>
+                                    <h4 style="color: #3333FF">Profesión: @Model.Solicitud.Profesiones.Desc_Profesion</h4>
+                                    <h4 style="color: #3333FF">Tarea: @Model.Solicitud.Tareas.Desc_Tarea</h4>
+                                    <h5>@Model.Solicitud.Desc_Solicitud</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @Model.Solicitud.Fecha <br />
+                                @Model.Solicitud.Horarios.Horario.ToString()<br />
+                                @Model.Solicitud.Zonas.Zona.ToString()<br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            @Html.Label("Descripcion:", new { @class = "control-label" })
+            <br />
+            @Html.TextAreaFor(m => m.CrearPrespuesto.observaciones, new { @class = "form-control", @placeholder = "descripcion del presupuesto" })
+            @Html.ValidationMessageFor(m => m.CrearPrespuesto.observaciones, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            <label class="control-label">Fecha y Hora de la Visita:</label>
+            <br />
+            <div class='input-group date' id='datetimepicker1'>
+                @Html.EditorFor(x => x.CrearPrespuesto.hora, new { htmlAttributes = new { @id = "hora", @class = "form-control" } })
+                @Html.ValidationMessageFor(x => x.CrearPrespuesto.hora, null, new { @class = "text-danger" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <br />
+            @Html.Label("Precio:", new { @class = "control-label" })
+            <br />
+                @Html.TextBoxFor(m => m.CrearPrespuesto.precio, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CrearPrespuesto.precio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-8">
+            <br />
+            <input type="submit" value="Aceptar" class="btn btn-success" />
+            @Html.ActionLink("Cancelar", "SolicitudesAResponder", "Presupuestos", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}
+
+

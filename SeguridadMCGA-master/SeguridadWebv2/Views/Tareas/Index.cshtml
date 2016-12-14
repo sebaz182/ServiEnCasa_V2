@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SeguridadWebv2.Models.App.Tareas>
+
+@{
+    ViewBag.Title = "Tareas";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Tareas</h2>
+<hr />
+<div class="container">
+    <div class="row col-md-6 col-md-offset-2 custyle">
+        <div class="form-group">
+            @using (Html.BeginForm("Index", "Tareas", FormMethod.Post))
+            {
+                @Html.DropDownList("ProfesionID", (SelectList)ViewBag.ProfesionID, "Seleccionar Profesión", new { @class = "form-control" })
+                <br />
+                <input type="submit" value="Buscar" class="btn btn-primary" />
+            }
+             <a href="@Url.Action("Create", "Tareas")" class="btn btn-primary btn-xs pull-right"><b>+</b> Agregar Nueva Tarea </a>
+        </div>
+        <table id="tareas" class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tarea</th>
+                    <th>Profesión</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                    {
+                        foreach (var p in Model)
+                        {
+                            <tr>
+                                <td class='actualizar'>@p.Id_Tarea</td>
+                                <td class='actualizar'>@p.Desc_Tarea</td>
+                                <td class='actualizar'>@p.Profesiones.Desc_Profesion.ToString()</td>
+                                <td class="text-center">
+                                    <a class='btn btn-info btn-xs' href="@Url.Action("Edit","Tareas",new { id = p.Id_Tarea})"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                                    <a href="@Url.Action("Delete","Tareas",new { id = p.Id_Tarea})" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </div>
+    </div>

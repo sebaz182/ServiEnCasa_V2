@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header id="intro">
+    @Html.Partial("_SolicitudPartial")
+
+</header>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var searchBoxBloodHound = new Bloodhound({
+                datumTokenizer: function (datum) {
+                    return Bloodhound.tokenizers.whitespace(datum.Zona);
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Home/BuscarZonas?busqueda=%QUERY',
+                    wildcard: '%QUERY',
+                    // the returned json contains an array of strings, but the Bloodhound
+                    // suggestion engine expects JavaScript objects so this converts all of
+                    // those strings into objects containing the properties, title and author
+                    filter: function (resultados) {
+                        return $.map(resultados, function (data) {
+                            return {
+                                zona: data
+                            }
+                        });
+                    },
+
+                },
+
+            });
+
+            searchBoxBloodHound.initialize();
+
+            $('#scrollable-dropdown-menu #mensaje-busqueda #searchBox').typeahead(null, {
+                displayKey: 'zona',
+                source: searchBoxBloodHound.ttAdapter(),
+                limit: 10,
+                templates: {
+                    empty: [
+                      '<div class="empty-message">',
+                        'Lo siento, no se pudo encontrar la Zona.',
+                      '</div>'
+                    ].join('\n'),
+                    suggestion: Handlebars.compile('<p><strong>{{zona}}</strong></p>')
+                }
+            });
+
+        });
+    </script>
+}

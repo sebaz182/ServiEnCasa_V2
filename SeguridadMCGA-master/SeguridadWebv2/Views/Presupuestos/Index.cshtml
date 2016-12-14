@@ -1,0 +1,56 @@
+﻿@using SeguridadWebv2.Models.App
+@model IEnumerable<SeguridadWebv2.Models.App.Presupuestos>
+@{
+    ViewBag.Title = "Mis Presupuestos";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Mis Presupuestos</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Count() > 0)
+            {
+                foreach (var presupuesto in Model)
+                {
+                    var solicitud = new Solicitudes();
+                    solicitud = presupuesto.Solicitudes;
+                    <div class="col-md-8">
+                        <div class="panel panel-danger">
+                            <div class="panel-body">
+                                <div class="col-md-3">
+                                    <img src="@Url.Content(solicitud.Foto.ToString()    )" class="img-responsive" />
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="header">
+                                        <h4 style="color: #3333FF">Tarea: @solicitud.Tareas.Desc_Tarea</h4>
+                                        <h5>@solicitud.Desc_Solicitud</h5>
+                                        <h5>Descripción del Presupuesto: @presupuesto.Observacion </h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    @solicitud.Fecha <br />
+                                    @solicitud.Horarios.Horario.ToString()<br />
+                                    @solicitud.Zonas.Zona.ToString()<br />
+
+                                    <div>
+                                        <h2 style="color:red">$ @presupuesto.Precio </h2>
+                                        @*<a href="@Url.Action("CalificarServi", "Calificacion", new { id = @presupuesto.Id_Servicio })" class="btn btn-danger"><i class="fa fa-heart-o"></i> Calificar Servicio</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @: <div class="text-muted">&nbsp;No se encontraron Solicitudes.</div>
+}
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,135 @@
+﻿<div>
+ @model SeguridadWebv2.Models.SolicitudViewModel
+<section id="main-slider" class="no-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 pull-right">
+                <div id="indexservi" class="well">
+                    @using (Html.BeginForm("EnviarSolicitud", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.Label("Estoy Buscando: ", new { @class = "col-md-4 control-label" })
+                            <div class="col-md-6 input-group">
+                                @Html.DropDownListFor(model => model.ProfesionId, new SelectList(ViewBag.Profesiones, "Id_Profesion", "Desc_Profesion"), "--Seleccionar Profesion--", new { @id = "selectedprofesiones", @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <span class="fa fa-user">
+                                    </span>
+                                </span>
+                                @Html.ValidationMessageFor(m => m.ProfesionId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                                <div class="form-group">
+                                    @Html.Label("Que hay que hacer?: ", new { @class = "col-md-4 control-label" })
+                                    <div class="col-md-6 input-group">
+                                        @Html.DropDownListFor(m => m.TareaId, new SelectList(ViewBag.Tareas, "Id_Tarea", "Desc_Tarea"), "--Seleccionar Tarea--", new { @class = "form-control" })
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-briefcase" aria-hidden="true">
+                                            </span>
+                                        </span>
+                                        @Html.ValidationMessageFor(m => m.TareaId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Foto:", new { @class = "control-label col-md-4" })
+                                    <div class="col-md-6 input-group">
+                                        <input type="file" id="fotoupload" name="fotoupload" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-file-image-o" aria-hidden="true">
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Descripcion Trabajo:", new { @class = "col-md-4 control-label" })
+                                    <div class="col-md-7 input-group">
+                                        @Html.TextAreaFor(m => m.DescripcionServicio, new { @class = "form-control", @placeholder = "Revisar un calefon que no enciende" })
+                                        @Html.ValidationMessageFor(m => m.DescripcionServicio, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Fecha:</label>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class='col-sm-4'>
+                                                <div class="form-group">
+                                                    <div class='input-group date' id='datetimepicker1'>
+                                                        @Html.EditorFor(x => x.FechaInicio, new { htmlAttributes = new { @id = "fechainicio", @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(x => x.FechaInicio, null, new { @class = "text-danger" })
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function () {
+                                                    $('#datetimepicker1').datepicker();
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Horario Estimado: ", new { @class = "col-md-4 control-label" })
+                                    <div class="col-md-6 input-group">
+                                        @* @Html.EditorFor(x => x.Hora, new { htmlAttributes = new { @id = "hora", @class = "form-control" } })*@
+                                        @Html.DropDownListFor(m => m.idHora, new SelectList(ViewBag.Horarios, "Id_Horario", "Horario"), "--Seleccionar Horario--", new { @class = "form-control" })
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-briefcase" aria-hidden="true">
+                                            </span>
+                                        </span>
+                                        @Html.ValidationMessageFor(m => m.idHora, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    @Html.Label("Zona: ", new { @class = "col-md-4 control-label" })
+                                    <div id="scrollable-dropdown-menu">
+                                        <div id="mensaje-busqueda" class="input-group">
+                                            @Html.TextBoxFor(m => m.Zona, null, new { @class = "form-control", @placeholder = "Buscar por Zona / Localidad", @id = "searchBox" })
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-globe" aria-hidden="true">
+                                                </span>
+                                            </span>
+                                            @Html.ValidationMessageFor(m => m.Zona, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div><!-- /scrollable-dropdown-menu -->
+                                </div>
+                                <br /><br />
+
+                                <div class="form-group">
+                                    <span class="input-group-btn centered">
+                                        <button type="submit" class="btn btn-block btn-success">Enviar Solicitud</button>
+                                    </span>
+                                </div>
+                    }
+                </div><!-- /well -->
+            </div><!-- /.col-lg-8 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!--/#busqueda-especialistas-->
+
+
+</div>
+
+<script >
+    $('#selectedprofesiones').change(function () {
+        $.ajax({
+            url: '/Home/getTareas?idprof=' + $(this).val(),
+            type: 'GET',
+            success: function (result) {
+                $('#TareaId').find('option').remove();
+                $('#TareaId').append('<option value="0"> --Seleccionar Tarea-- </option>');
+                
+                var list = $.parseJSON(result);
+
+                $.each(list, function (index, obj) {
+                    $('#TareaId').append('<option value="'+ obj.Id +'">' + obj.option + '</option>');
+                });
+            }
+        })
+    })
+</script>
+

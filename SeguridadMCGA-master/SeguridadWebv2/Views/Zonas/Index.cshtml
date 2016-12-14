@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SeguridadWebv2.Models.App.Zonas>
+@{
+    <script src="//oss.maxcdn.com/bootbox/4.2.0/bootbox.min.js"></script>
+    ViewBag.Title = "Zonas";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Administración de Zonas</h2>
+<hr />
+<div class="container">
+    <div class="row col-md-6 col-md-offset-2 custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <a href="@Url.Action("Create","Zonas")" class="btn btn-primary btn-xs pull-right"><b>+</b> Agregar Nueva Zona </a>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Zona</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            @foreach (var z in Model)
+            {
+                <tr>
+                    <td>@z.Id_Zona</td>
+                    <td>@z.Zona</td>
+                    <td class="text-center">
+                        <a class='btn btn-info btn-xs' href="@Url.Action("Edit","Zonas",new { id = z.Id_Zona})"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                        <a href="@Url.Action("Delete","Zonas",new { id = z.Id_Zona})" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

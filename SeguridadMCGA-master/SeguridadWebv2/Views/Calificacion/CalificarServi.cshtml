@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "CalificarServi";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<head>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/star-rating.css" media="all" type="text/css" />
+    @*<link rel="stylesheet" href="~/Content/css/themes/krajee-fa/theme.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="~/Content/css/themes/krajee-svg/theme.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="~/Content/css/themes/krajee-uni/theme.css" media="all" type="text/css" />*@
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="~/Content/js/star-rating.js" type="text/javascript"></script>
+    @*<script src="~/Content/js/themes/krajee-fa/theme.js" type="text/javascript"></script>
+    <script src="~/Content/js/themes/krajee-svg/theme.js" type="text/javascript"></script>
+    <script src="~/Content/js/themes/krajee-uni/theme.js" type="text/javascript"></script>*@
+</head>
+    
+    <body>
+        <h2>CalificarServi</h2>
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <br>
+                        <h4>1- ¿Se realizo el Trabajo prometido en el Presupuesto?</h4>
+                        <label class="checkbox-inline"><input type="checkbox" value="">SI</label>
+                        <label class="checkbox-inline"><input type="checkbox" value="">NO</label>
+                        <br>
+                        <h4>2- Con respecto al trabájo realizado, ¿Qué puntaje le otorga al mismo?</h4>
+                        <input type="text" class="rating rating-loading" value="2.5" data-size="lg" title="calTrabajo">
+                        <br>
+                        <h4>3- Con respeco al Servi, ¿Qué puntaje le otorga al mismo?</h4>
+                        <input type="text" class="rating rating-loading" value="2.5" data-size="lg" title="calServi">
+                        <br />
+                        <div class="form-group">
+                            <label for="comment">4- Comentarios:</label>
+                            <textarea class="form-control" rows="5" id="comment" style="width:50%"></textarea>
+                        </div>
+                        <input type="submit" value="Aceptar" class="btn btn-success" />
+                        @Html.ActionLink("Cancelar", "MisServicios", "Servicios", null, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+

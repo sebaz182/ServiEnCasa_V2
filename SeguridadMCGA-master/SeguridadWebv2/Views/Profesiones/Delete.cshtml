@@ -1,0 +1,20 @@
+﻿@model SeguridadWebv2.Models.App.Profesiones
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_LayoutDash.cshtmll";
+}
+
+<h2>Eliminar Profesión</h2>
+<hr />
+<h3>¿Esta seguro de eliminar la Profesión?</h3>
+<br />
+<h3>@Html.DisplayFor(model => model.Desc_Profesion)</h3>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        @Html.ActionLink("Cancelar", "Index", "Profesiones", null, new { @class = "btn btn-default" })
+    </div>
+}

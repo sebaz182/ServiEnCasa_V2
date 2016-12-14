@@ -1,0 +1,21 @@
+﻿@model SeguridadWebv2.Models.App.Zonas
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+<h2>Eliminar Zona</h2>
+<hr />
+<h3>¿Esta seguro de eliminar la Zona?</h3>
+<br />
+<h3>@Html.DisplayFor(model => model.Zona)</h3>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        @Html.ActionLink("Cancelar", "Index", "Zonas", null, new { @class = "btn btn-default" })
+    </div>
+}
+
+

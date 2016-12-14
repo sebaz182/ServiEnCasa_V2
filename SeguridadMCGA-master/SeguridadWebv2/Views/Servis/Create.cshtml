@@ -1,0 +1,182 @@
+﻿@model SeguridadWebv2.Models.CreateServiViewModel
+
+@{
+    ViewBag.Title = "Crear Servi";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Alta de Servi</h2>
+@Html.AntiForgeryToken()
+@using (Html.BeginForm("Create", "Servis", FormMethod.Post))
+{
+    <div class="row">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.nombre, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.apellido, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.apellido, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.apellido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.dni, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.dni, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.dni, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.matricula, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.matricula, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.matricula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.telefono, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.telefono, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.telefono, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Foto:", new { @class = "control-label col-md-2" })
+                <div class="col-md-6 input-group">
+                    <input type="file" id="fotoupload" name="fotoupload" />
+                    <span class="input-group-addon">
+                        <span class="fa fa-file-image-o" aria-hidden="true">
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.mail, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.mail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.mail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.confMail, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.confMail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.confMail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pass, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.pass, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.pass, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.confPass, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.confPass, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.confPass, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">
+                    Seleccionar Tareas:
+                </label>
+                <div class="col-md-6">
+                    @foreach (var item in (SelectList)ViewBag.Tareas)
+                    {
+                        <div>
+                            <input type="checkbox" name="selectedTarea" value="@item.Value" class="checkbox-inline" />
+                            @Html.Label(item.Text, new { @class = "control-label" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                @using (Html.BeginForm("Busqueda", "Servis", FormMethod.Get))//(Html.BeginForm("Create", "Servis", FormMethod.Post))
+                {
+                    @Html.LabelFor(m => m.ProfesionID, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ProfesionID", (SelectList)ViewBag.ProfesionID, "Seleccionar Profesión", new { @id="profesionid", @class = "form-control",
+                        @onchange = "javascript:Getareas(this.value);"})
+                        @Html.ValidationMessageFor(m => m.ProfesionID, "", new { @class = "text-danger" })
+                        <input type="submit" value="Buscar" class="btn btn-primary" />
+                    </div>
+                }
+                </div>
+
+
+                @*<div class="form-group">
+                    <label class="col-md-2 control-label">
+                        Seleccionar Tareas que realiza:
+                    </label>
+                </div>*@
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <br />
+                        <input type="submit" value="Aceptar" class="btn btn-success" />
+                        @Html.ActionLink("Cancelar", "Index", "Tareas", null, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+
+
+<script>
+    $('#selectedprofesiones').change(function () {
+        $.ajax({
+            url: '/Home/getTareas?idprof=' + $(this).val(),
+            type: 'GET',
+            success: function (result) {
+                $('#TareaId').find('option').remove();
+                $('#TareaId').append('<option value="0"> --Seleccionar Tarea-- </option>');
+
+                var list = $.parseJSON(result);
+
+                $.each(list, function (index, obj) {
+                    $('#TareaId').append('<option value="'+ obj.Id +'">' + obj.option + '</option>');
+                });
+            }
+        })
+    })
+</script>
+
+@*<script type="text/javascript">
+    function Getareas(_TareaId) {
+        $("#profesionid").change(function () {
+            var selectedItem = $(this).val();
+            $.ajax({
+                url: "/Servis/GetTareas",
+                data: { selectedcampo: _TareaId },
+                type: "GET",
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<input type='checkbox' value=" + data[x].Value + ">" + data[x].Text + "</input>";
+                    }
+                    $("#dTareas").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        });
+     }
+</script>*@

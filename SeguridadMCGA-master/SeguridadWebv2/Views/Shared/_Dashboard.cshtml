@@ -1,0 +1,65 @@
+﻿<div id="sidebar" class="nav-collapse">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu" id="nav-accordion">
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-dashboard"></i>
+                <span>Administrador</span>
+            </a>
+            <ul class="sub">
+                @*@if (Request.IsAuthenticated && User.IsInRole("Admin"))*@
+                @*{*@
+                    <li>@Html.ActionLink("Usuarios", "Index", "UsuariosAdmin")</li>
+                    <li>@Html.ActionLink("Grupos", "Index", "GruposAdmin")</li>
+                    <li>@Html.ActionLink("Acciones", "Index", "AccionesAdmin")</li>
+                    <li>@Html.ActionLink("Servis", "Index", "Servis")</li>
+                    <li>@Html.ActionLink("Profesiones", "Index", "Profesiones")</li>
+                    <li>@Html.ActionLink("Tareas", "Index", "Tareas")</li>
+                    @*<li>@Html.ActionLink("Administradores", "Index", "Admin")</li>*@
+                    <li>@Html.ActionLink("Zonas", "Index", "Zonas")</li>
+                @*}*@
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-suitcase"></i>
+                <span>Usuario</span>
+            </a>
+            <ul class="sub">
+                @*@if (Request.IsAuthenticated && User.IsInRole("Reservas"))*@
+                @*{*@
+                    <li>@Html.ActionLink("Mis Solicitudes", "MisSolicitudes", "Solicitudes")</li>
+                    <li>@Html.ActionLink("Mis Servicios", "MisServicios", "Servicios")</li>
+                    @*<li>@Html.ActionLink("Hoteles", "Index", "Hoteles")</li>*@
+                @*}*@
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-suitcase"></i>
+                <span>Servis</span>
+            </a>
+            <ul class="sub">
+                @*@if (Request.IsAuthenticated && User.IsInRole("Reportes"))*@
+                @*{*@
+                    <li>@Html.ActionLink("Solicitudes a Responder", "SolicitudesAResponder", "Presupuestos")</li>
+                    <li>@Html.ActionLink("Mis Presupuestos", "Index", "Presupuestos")</li>
+                @*}*@
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class=" fa fa-bar-chart-o"></i>
+                <span>Reportes</span>
+            </a>
+            <ul class="sub">
+                @*@if (Request.IsAuthenticated && User.IsInRole("Reportes"))*@
+                @* { *@
+                    <li>@Html.ActionLink("Reportes", "Index", "Reportes")</li>
+                    <li>@Html.ActionLink("Hoteles", "Reportes", "Hoteles")</li>
+                @* } *@
+            </ul>
+        </li>
+    </ul>
+    <!-- sidebar menu end-->
+</div>

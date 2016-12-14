@@ -1,0 +1,21 @@
+﻿@model SeguridadWebv2.Models.App.Tareas
+@{
+    ViewBag.Title = "Eliminar Tareas";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Eliminar Tareas</h2>
+<hr />
+<h3>¿Esta seguro de eliminar la Tarea?</h3>
+<br />
+<h3>@Html.DisplayFor(model => model.Desc_Tarea)</h3>
+<h3>De la Profesión: @Html.DisplayFor(model => model.Profesiones.Desc_Profesion)</h3>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        @Html.ActionLink("Cancelar", "Index", "Tareas", null, new { @class = "btn btn-default" })
+    </div>
+}
