@@ -9,11 +9,23 @@ namespace SeguridadWebv2.Controllers
 {
     public class ServiciosController : Controller
     {
-        private ModeloContainer db = new ModeloContainer();
+
+        public ModeloContainer dbContext
+        {
+            get
+            {
+                if (_db == null)
+                {
+                    _db = new ModeloContainer();
+                }
+                return _db;
+            }
+        }
+        private ModeloContainer _db;
 
         public ActionResult MisServicios()
         {
-            return View(db.Servicios.ToList());
+            return View(dbContext.Servicios.ToList());
         }
 
 

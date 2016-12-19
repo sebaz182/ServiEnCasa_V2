@@ -22,17 +22,36 @@ namespace SeguridadWebv2.Controllers
         [HttpGet]
         public ActionResult SolicitudesAResponder()
         {
-            //var IdUsuario = User.Identity.GetUserId();
-            //var usuario = db.Users.Where(x => x.Id == IdUsuario).FirstOrDefault();
+            List<Solicitudes> list = new List<Solicitudes>();
+            
+            var IdServi = User.Identity.GetUserId();
+            
+            var servi = db.Servis.FirstOrDefault(x => x.Id == IdServi);
 
-            //var servis = db.Servis.ToList();
+            if (servi.ServisProfesiones != null)
+            {
+                foreach (var profecion in servi.ServisProfesiones.Select(x => x.Profesion))
+                {
+                    var filter = db.Solicitudes.Where(x => x.Profesiones.Id_Profesion == profecion.Id_Profesion);
+                    list.AddRange(filter);
+                }
+            }
 
-            //var lista = db.Solicitudes.Where(x => x.Profesiones.Id_Profesion == Servis).ToList();
+            if (servi.ServisTareas != null)
+            {
+                List<Solicitudes> tfilter = new List<Solicitudes>();
+                foreach (var tarea in servi.ServisTareas.Select(x => x.Tarea))
+                {
+                    var filter = list.Where(x => x.Tareas.Id_Tarea == tarea.Id_Tarea);
 
+                    tfilter.AddRange(filter);
+                }
 
-            //return View(lista);
+                list = tfilter;
+            }
 
-            return View(db.Solicitudes.Where(x => x.Estado != "Realizado" && x.Contador == 0).ToList());
+            return View(list);
+
         }
 
         // GET: Presupuestos
@@ -104,10 +123,9 @@ namespace SeguridadWebv2.Controllers
                 presupuesto.Solicitudes = solicitud;
                 presupuesto.Servis.Add(servi);
 
-                solicitud.Contador = solicitud.Contador + 1;
-                solicitud.Estado = "Presupuestado";
+                var solMod = CambiaEstado(solicitud);
                 
-                db.Entry(solicitud).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(solMod).State = System.Data.Entity.EntityState.Modified;
 
                 db.Presupuestos.Add(presupuesto);
 
@@ -119,6 +137,14 @@ namespace SeguridadWebv2.Controllers
             {
                 return View();
             }
+        }
+
+        public Solicitudes CambiaEstado(Solicitudes _solicitud)
+        {
+            _solicitud.Contador = _solicitud.Contador + 1;
+            _solicitud.Estado = "Presupuestado";
+
+            return (_solicitud);
         }
 
 

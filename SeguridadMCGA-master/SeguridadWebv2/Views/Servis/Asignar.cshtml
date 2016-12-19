@@ -1,0 +1,58 @@
+﻿@using SeguridadWebv2.Models.App
+
+@model ICollection<SeguridadWebv2.Models.App.Tareas>
+
+@{
+    ViewBag.Title = "Asignar";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Asignar Profesiones y Tareas</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="row col-md-6 col-md-offset-2 custyle">
+            <div class="form-group">
+                    @Html.DropDownList("_idProfesion", (SelectList)ViewBag.ProfesionID, "Seleccionar Profesión", new { @class = "form-control", disabled = "disabled" })
+            </div>
+            <table id="tareas" class="table table-striped custab">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tarea</th>
+                        <th>Profesión</th>
+                        <th>Selección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var p in Model)
+                        {
+                            <tr>
+                                <td class='actualizar'>@p.Id_Tarea</td>
+                                <td class='actualizar'>@p.Desc_Tarea</td>
+                                <td class='actualizar'>
+                                    @if (p != null && p.Profesiones != null)
+                                    {
+                                        @p.Profesiones.Desc_Profesion.ToString();
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selectedRows" value="@p.Id_Tarea" class="checkbox-inline"
+                                           @if (p.ServisTareas != null && p.ServisTareas.Any(x => x.Tarea.Id_Tarea == p.Id_Tarea))
+                                           {
+                                               @:checked
+                                           } />
+                                   </td>
+                               </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <input type="submit" value="Cargar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+

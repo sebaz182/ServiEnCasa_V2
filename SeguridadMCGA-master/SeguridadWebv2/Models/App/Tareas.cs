@@ -11,7 +11,7 @@ namespace SeguridadWebv2.Models.App
         public Tareas()
         {
             this.Solicitudes = new HashSet<Solicitudes>();
-            this.Servis = new HashSet<Servis>();
+            this.ServisTareas = new HashSet<ServisTareas>();
         }
 
         [Key]
@@ -19,7 +19,7 @@ namespace SeguridadWebv2.Models.App
         public string Desc_Tarea { get; set; }
         
         public virtual ICollection<Solicitudes> Solicitudes { get; set; }
-        public virtual ICollection<Servis> Servis { get; set; }
         public virtual Profesiones Profesiones { get; set; }
+        public virtual ICollection<ServisTareas> ServisTareas { get; set; }
     }
 }

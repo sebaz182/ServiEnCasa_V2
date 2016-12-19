@@ -12,16 +12,16 @@ namespace SeguridadWebv2.Models.App
     {
         public Profesiones()
         {
-            this.Servis = new HashSet<Servis>();
             this.Solicitudes = new HashSet<Solicitudes>();
             this.Tareas = new HashSet<Tareas>();
+            this.ServisProfesiones = new HashSet<ServisProfesiones>();
         }
         [Key]
         public int Id_Profesion { get; set; }
         public string Desc_Profesion { get; set; }
         
-        public virtual ICollection<Servis> Servis { get; set; }
         public virtual ICollection<Solicitudes> Solicitudes { get; set; }
         public virtual ICollection<Tareas> Tareas { get; set; }
+        public virtual ICollection<ServisProfesiones> ServisProfesiones { get; set; }
     }
 }

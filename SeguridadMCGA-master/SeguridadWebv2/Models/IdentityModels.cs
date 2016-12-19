@@ -90,6 +90,8 @@ namespace SeguridadWebv2.Models
         public virtual DbSet<Presupuestos> Presupuestos { get; set; }
         public virtual DbSet<Solicitudes> Solicitudes { get; set; }
         public virtual DbSet<Profesiones> Profesiones { get; set; }
+        public virtual DbSet<ServisTareas> ServiTareas { get; set; }
+        public virtual DbSet<ServisProfesiones> ServisProfesiones { get; set; }
         // Override OnModelsCreating:
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

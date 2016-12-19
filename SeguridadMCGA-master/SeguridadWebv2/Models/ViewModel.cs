@@ -246,6 +246,21 @@ namespace SeguridadWebv2.Models
         public string profesion { get; set; }
     }
 
+    public class ProfesionesYTareas
+    {
+        [Required]
+        [Display(Name = "Profesión")]
+        public int _idProfesion { get; set; }
+
+        public ICollection<Tareas> TareasList { get; set; }
+    }
+
+    public class GeneralProfYTareasVM
+    {
+        public ICollection<Tareas> Tarea { get; set; }
+        public ProfesionesYTareas ProfesionesYTareas { get; set; }
+    }
+
     public class RatingViewModel
     {
 

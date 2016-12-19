@@ -164,7 +164,9 @@
     <Compile Include="Models\App\Presupuestos.cs" />
     <Compile Include="Models\App\Profesiones.cs" />
     <Compile Include="Models\App\Servicios.cs" />
+    <Compile Include="Models\App\ServisProfesiones.cs" />
     <Compile Include="Models\App\Servis.cs" />
+    <Compile Include="Models\App\ServisTareas.cs" />
     <Compile Include="Models\App\Solicitudes.cs" />
     <Compile Include="Models\App\Tareas.cs" />
     <Compile Include="Models\App\Zonas.cs" />
@@ -497,6 +499,7 @@
     <Content Include="Views\Shared\_Dashboard.cshtml" />
     <Content Include="Views\Reportes\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutDash.cshtml" />
+    <Content Include="Views\Servis\Asignar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
