@@ -13,6 +13,7 @@ using SeguridadWebv2.Models.App;
 
 namespace SeguridadWebv2.Controllers
 {
+    [Authorize(Roles = "Admin, AllGrupos")]
     public class ServisController : Controller
     {
         public ModeloContainer dbContext
@@ -168,33 +169,10 @@ namespace SeguridadWebv2.Controllers
                     Matricula = vmServi.matricula,
                     DNI = vmServi.dni,
                     Foto = vmServi.Foto,
+                    Calificacion = 0,
+                    CalTareas =0,
+                    CantServicios = 0
                 };
-
-                ////Add Profesiones 
-                //Profesiones p = db.Profesiones.Where(x => x.Id_Profesion == vmServi.ProfesionID).FirstOrDefault();
-
-                //if (p != null)
-                //{
-                //    ServisProfesiones sp = new ServisProfesiones();
-
-                //    sp.Profesion = p;
-                //    servi.ServisProfesiones.Add(sp);
-                //}
-
-                ////Add Tareas
-                //if (selectedTareas == null)
-                //{
-                //    Tareas t = db.Tareas.Where(x => x.Desc_Tarea == "Cablear").FirstOrDefault();
-
-                //    if (t != null)
-                //    {
-                //        ServisTareas st = new ServisTareas();
-
-                //        st.Tarea = t;
-                //        servi.ServisTareas.Add(st);
-                //    }
-                //}
-
 
                 //An entity object cannot be referenced by multiple instances of IEntityChangeTracker
                 //System.InvalidOperationException: An entity object cannot be referenced by multiple instances of IEntityChangeTracker.
@@ -203,17 +181,17 @@ namespace SeguridadWebv2.Controllers
                 //Add User to the selected Groups 
                 if (adminresult.Succeeded)
                 {
-                    await this.UserManager.AddToRoleAsync(servi.Id, "Admin");
-                    string selectedGroups = "Services";
+                    await this.UserManager.AddToRoleAsync(servi.Id, "Servis");
+                    string selectedGroups = "Servis";
                     if (selectedGroups != null)
                     {
                         //selectedGroups = selectedGroups ?? new string[] { };
                         //await this.GroupManager
-                        //    .SetUserGroupsAsync(servi.Id, selectedGroups);
+                            //.SetUserGroupsAsync(servi.Id, selectedGroups);
                     }
 
-
-                    var code = await this.UserManager.GenerateEmailConfirmationTokenAsync(servi.Id);
+                    //Envio de los Mails
+                    //var code = await this.UserManager.GenerateEmailConfirmationTokenAsync(servi.Id);
                     //var callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = servi.Id, code = code }, protocol: Request.Url.Scheme);
                     //await this.UserManager.SendEmailAsync(servi.Id, "Confirmar su cuenta", "Por favor para confirmar su cuenta haga click en el siguiente enlace: <a href=\"" + callbackUrl + "\">link</a>");
 

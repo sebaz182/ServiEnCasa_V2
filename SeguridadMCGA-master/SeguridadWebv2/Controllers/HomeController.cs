@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
@@ -12,10 +13,13 @@ using System.Web.Services;
 
 namespace SeguridadWebv2.Controllers
 {
+
     public class HomeController : Controller
     {
 
-        Models.ModeloContainer db = new Models.ModeloContainer();
+        private Models.ModeloContainer db = new Models.ModeloContainer();
+
+        private SolicitudesController _SolicitudController = new SolicitudesController();
 
         public class jsonReturn 
         {
@@ -44,6 +48,11 @@ namespace SeguridadWebv2.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            return View();
+        }
+
+        public ActionResult Inicio()
+        {
             return View();
         }
 
@@ -97,6 +106,15 @@ namespace SeguridadWebv2.Controllers
                         Usuarios = usuario,
                         Horarios = hora,
                     };
+                    var lista = _SolicitudController._maching(solicitud);
+
+                    var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                    foreach (var servi in lista)
+                    {
+                        userManager.SendEmail(servi.Id, "Solicitud de Presupuesto", "Usted tiene una solicitud para Presupuestar, ingrese a ServiEnCasas para responderla");
+                    }
+
                     db.Solicitudes.Add(solicitud);
                     db.SaveChanges();
 
@@ -109,10 +127,10 @@ namespace SeguridadWebv2.Controllers
             }
             else
             {
-                return View();
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Inicio");
 
         }
 

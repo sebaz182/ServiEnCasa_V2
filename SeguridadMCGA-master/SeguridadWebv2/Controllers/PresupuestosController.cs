@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
 using System;
@@ -16,23 +17,23 @@ namespace SeguridadWebv2.Controllers
         [HttpGet]
         public ActionResult PresupuestosSolicitud(int id)
         {
-            return View(db.Presupuestos.Where(x=>x.Solicitudes.Id_Solicitud==id).ToList());
+            return View(db.Presupuestos.Where(x => x.Solicitudes.Id_Solicitud == id && x.Estado!="Aceptado").ToList().OrderByDescending(x=>x.Hora));
         }
 
         [HttpGet]
         public ActionResult SolicitudesAResponder()
         {
             List<Solicitudes> list = new List<Solicitudes>();
-            
+
             var IdServi = User.Identity.GetUserId();
-            
+
             var servi = db.Servis.FirstOrDefault(x => x.Id == IdServi);
 
             if (servi.ServisProfesiones != null)
             {
-                foreach (var profecion in servi.ServisProfesiones.Select(x => x.Profesion))
+                foreach (var profesion in servi.ServisProfesiones.Select(x => x.Profesion))
                 {
-                    var filter = db.Solicitudes.Where(x => x.Profesiones.Id_Profesion == profecion.Id_Profesion);
+                    var filter = db.Solicitudes.Where(x => x.Profesiones.Id_Profesion == profesion.Id_Profesion && x.Estado!="Realizado");
                     list.AddRange(filter);
                 }
             }
@@ -57,7 +58,19 @@ namespace SeguridadWebv2.Controllers
         // GET: Presupuestos
         public ActionResult Index()
         {
-            return View(db.Presupuestos.ToList());
+            var IdServi = User.Identity.GetUserId();
+            var servi = db.Servis.FirstOrDefault(x => x.Id == IdServi);
+
+            if (servi != null)
+            {
+                var list = db.Presupuestos.Where(x => x.Servis.Any(y=>y.Id==servi.Id) ).ToList().OrderByDescending(x=>x.Hora);
+
+                return View(list);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: Presupuestos/Details/5
@@ -108,36 +121,52 @@ namespace SeguridadWebv2.Controllers
         [HttpPost]
         public ActionResult Create(GeneralPresupuestoVM viewModel)
         {
-            var servi = db.Servis.Where(x => x.Id != null).SingleOrDefault();
-
-            try
+            if (ModelState.IsValid && User.Identity.GetUserId() != null)
             {
-                // TODO: Add insert logic here
-                var presupuesto = new Presupuestos();
-                presupuesto.Estado = "Presupuestado";
-                presupuesto.Hora = viewModel.CrearPrespuesto.hora;
-                presupuesto.Fecha_Vencimiento =DateTime.Now.AddDays(3);
-                presupuesto.Observacion = viewModel.CrearPrespuesto.observaciones;
-                presupuesto.Precio = viewModel.CrearPrespuesto.precio;
+                var IdServi = User.Identity.GetUserId();
+                var servi = db.Servis.Where(x => x.Id == IdServi).FirstOrDefault();
                 var solicitud = db.Solicitudes.Find(viewModel.CrearPrespuesto.idSolicitud);
-                presupuesto.Solicitudes = solicitud;
-                presupuesto.Servis.Add(servi);
-
                 var solMod = CambiaEstado(solicitud);
-                
-                db.Entry(solMod).State = System.Data.Entity.EntityState.Modified;
 
-                db.Presupuestos.Add(presupuesto);
+                try
+                {
+                    // TODO: Add insert logic here
+                    var presupuesto = new Presupuestos
+                    {
+                        Estado = "Presupuestado",
+                        Hora = viewModel.CrearPrespuesto.hora,
+                        Fecha_Vencimiento = DateTime.Now.AddDays(3),
+                        Observacion = viewModel.CrearPrespuesto.observaciones,
+                        Precio = viewModel.CrearPrespuesto.precio,
+                        Solicitudes = solicitud,
+                    };
 
-                db.SaveChanges();
+                    presupuesto.Servis.Add(servi);
 
-                return RedirectToAction("Index");
+                    var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                    userManager.SendEmail(solicitud.Usuarios.Id, "Respondieron a Tu Solicitud!", "Uno de nuestros capacitados Servis a realizado un presupuesto par tu Solicitud! /n Ingresa a ServiEnCasa para verlo. /Exitos!!!");
+
+                    db.Entry(solMod).State = System.Data.Entity.EntityState.Modified;
+
+                    db.Presupuestos.Add(presupuesto);
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
+            else
             {
                 return View();
             }
-        }
+
+            return RedirectToAction("Index");
+        } 
 
         public Solicitudes CambiaEstado(Solicitudes _solicitud)
         {

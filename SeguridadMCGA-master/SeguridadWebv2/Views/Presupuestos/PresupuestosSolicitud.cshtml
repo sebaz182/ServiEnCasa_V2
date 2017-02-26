@@ -3,71 +3,63 @@
 @model IEnumerable<SeguridadWebv2.Models.App.Presupuestos>
 @{
     ViewBag.Title = "Presupuestos de mi Solicitud";
-    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 
 <h2>Presupuestos de Mi Solicitud</h2>
 
-<div class="container">
-<div class="row">
-    <div class="col-md-12">
-        @if (Model.Count() > 0)
-        {
-            foreach (var presupuestos in Model)
-            {
-                var servi = new Servis();
-                servi = presupuestos.Servis.FirstOrDefault();
-                <div class="col-md-8">
-                    <div class="panel panel-danger">
-                        <div class="panel-body">
-                            <div class="col-md-3">
-                                <img src="@Url.Content(servi.Foto.ToString()    )" class="img-circle img-responsive" />
-                            </div>
-                            <div class="col-md-5">
-                                <div class="header">
-                                    <h4 style="color: #3333FF">@servi.Nombre @servi.Apellido </h4>
-                                    <h5>@presupuestos.Observacion</h5>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                @presupuestos.Fecha_Vencimiento <br />
-                                <h2 style="color:red">$ @presupuestos.Precio </h2>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Count() > 0)
+                {
+                    foreach (var presupuestos in Model)
+                    {
+                        decimal? calTrabajo = 0;
+                        decimal? calServi = 0;
+                        var servi = new Servis();
+                        servi = presupuestos.Servis.FirstOrDefault();
+                        if (servi.CantServicios != 0)
+                        {
+                            calTrabajo = Convert.ToDecimal(servi.CalTareas) / Convert.ToDecimal(servi.CantServicios);
+                            calServi = Convert.ToDecimal(servi.Calificacion) / Convert.ToDecimal(servi.CantServicios);
+                        }
 
-                                <div>
-                                    @*<a href="@Url.Action("PresupuestosSolicitudes", "Presupuestos", new { id = @presupuestos.Id_Presupuesto })" class="btn btn-danger"><i class="fa fa-heart-o"></i> Contratar</a>*@
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalContratar">
-                                        Contratar
-                                    </button>
+                        <div class="col-md-8">
+                            <div class="panel panel-danger">
+                                <div class="panel-body">
+                                    <div class="col-md-3">
+                                        <img src="@Url.Content(servi.Foto.ToString())" class="img-circle img-responsive" />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="header">
+                                            <h4 style="color: #3333FF">@servi.Nombre @servi.Apellido </h4>
+                                            <h5>Calificacion de Servi: @calServi</h5>
+                                            <h5>Calificacion de sus Trabajos: @calTrabajo</h5>
+                                            <h5>@presupuestos.Observacion</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @presupuestos.Hora <br />
+                                        <h2 style="color:red">$ @presupuestos.Precio </h2>
+
+                                        <div>
+                                            <a href="@Url.Action("ConfirmarContratacion", "Servicios", new { id = @presupuestos.Id_Presupuesto })" class="btn btn-primary btn-lg">Contratar</a>
+                                            @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalContratar" >
+                                                Contratar
+                                            </button>*@
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="text-muted">&nbsp;<h1>LO SENTIMOS!  :(</h1><br/><h2>Ningun Servi realizo un Presupuesto a tu Solucitud.</h2></div>
-}
-    </div>
-</div>
-    </div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalContratar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data>
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro que quiere contratar este Servicio ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <input type="submit" href="@Url.Action("Contratar","Presupuestos",new { @idPresupuesto = 1 })" value="Contratar"  class="btn btn-primary" />
+                    }
+                }
+                else
+                {
+                    <div class="text-muted">&nbsp;<h1>LO SENTIMOS!  :(</h1><br /><h2>Ningun Servi realizo un Presupuesto a tu Solucitud.</h2></div>
+                }
             </div>
         </div>
     </div>

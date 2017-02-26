@@ -71,12 +71,35 @@ namespace SeguridadWebv2.Models.App
 
             }
 
-            var groupManagerserv = new GrupoManager();
-            var newGroupserv = new ApplicationGroup("Services", "Acceso Services al Sistema");
+            var groupManagerServi = new GrupoManager();
+            var newGroupServi = new ApplicationGroup("Servis", "Acceso de Servis al Sistema");
 
-            groupManager.CreateGroup(newGroupserv);
-            groupManager.SetUserGroups(servi.Id, new string[] { newGroupserv.Id });
-            groupManager.SetGroupRoles(newGroupserv.Id, new string[] { rol.Name });
+            groupManager.CreateGroup(newGroupServi);
+            groupManager.SetUserGroups(servi.Id, new string[] { newGroupServi.Id });
+            groupManager.SetGroupRoles(newGroupServi.Id, new string[] { rol.Name });
+
+
+            var groupManagerUser = new GrupoManager();
+            var newGroupUser = new ApplicationGroup("Users", "Acceso de Usuarios al Sistema");
+
+            groupManager.CreateGroup(newGroupUser);
+            groupManager.SetUserGroups(user.Id, new string[] { newGroupUser.Id });
+            groupManager.SetGroupRoles(newGroupUser.Id, new string[] { rol.Name });
+
+            var PermisosServis = new List<ApplicationRole> {
+                new ApplicationRole {
+                    Name = "Servis"
+                },
+            };
+            PermisosServis.ForEach(c => db.Roles.Add(c));
+
+            var PermisosUsers = new List<ApplicationRole> {
+                new ApplicationRole {
+                    Name = "Users"
+                },
+            };
+            PermisosUsers.ForEach(c => db.Roles.Add(c));
+
 
             var PermisosUsuario = new List<ApplicationRole> {
                 new ApplicationRole {
@@ -191,6 +214,15 @@ namespace SeguridadWebv2.Models.App
             };
             horarios.ForEach(c => db.Horarios.Add(c));
 
+            var comision = new List<Comision>
+            {
+                 new Comision
+                 {
+                    ImpComision = 45
+                 }
+            };
+            comision.ForEach(c => db.Comision.Add(c));
+
             var profesiones = new List<Profesiones>
             {
                 new Profesiones
@@ -203,7 +235,7 @@ namespace SeguridadWebv2.Models.App
                 },
                 new Profesiones
                 {
-                   Desc_Profesion = "Plomero"
+                   Desc_Profesion = "Cerrajero"
                 },
                 new Profesiones
                 {
@@ -274,7 +306,7 @@ namespace SeguridadWebv2.Models.App
                 /*3*/
                 new Tareas
                 {
-                    Desc_Tarea = "Instalar",
+                    Desc_Tarea = "Abrir Cerradura",
                     Profesiones = profesiones[2]
                 },
                 new Tareas

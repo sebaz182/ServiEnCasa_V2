@@ -1,0 +1,163 @@
+﻿@using SeguridadWebv2.Models.App
+@model IEnumerable<SeguridadWebv2.Models.App.Servicios>
+@{
+    ViewBag.Title = "Servicios Realizados";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<h2>Servicios Realizados</h2>
+<div class="col-md-11">
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (var servicios in Model)
+                        {
+                            var solicitud = new Solicitudes();
+                            solicitud = servicios.Presupuestos.Solicitudes;
+                            if (servicios.Estado == "Confirmado" && servicios.Presupuestos.Hora < DateTime.Now)
+                            {
+                                var calificacion = new Calificaciones();
+                                calificacion = servicios.Calificaciones.FirstOrDefault();
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">Servicios Confirmado</div>
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="header">
+                                                <h4 style="color: #3333FF">Profesión: @solicitud.Profesiones.Desc_Profesion</h4>
+                                                <h4 style="color: #3333FF">Tarea: @solicitud.Tareas.Desc_Tarea</h4>
+                                                <h5>@solicitud.Desc_Solicitud</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @solicitud.Fecha.ToShortDateString() <br />
+                                            @solicitud.Horarios.Horario.ToString()<br />
+                                            @solicitud.Zonas.Zona.ToString()<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        foreach (var servicios in Model)
+                        {
+                            var solicitud = new Solicitudes();
+                            solicitud = servicios.Presupuestos.Solicitudes;
+                            if (servicios.Estado == "Calificado")
+                            {
+                                var calificacion = new Calificaciones();
+                                calificacion = servicios.Calificaciones.FirstOrDefault();
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Servicios Confirmado</div>
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="header">
+                                                <h4 style="color: #3333FF">Profesión: @solicitud.Profesiones.Desc_Profesion</h4>
+                                                <h4 style="color: #3333FF">Tarea: @solicitud.Tareas.Desc_Tarea</h4>
+                                                <h5>@solicitud.Desc_Solicitud</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @solicitud.Fecha.ToShortDateString() <br />
+                                            @solicitud.Horarios.Horario.ToString()<br />
+                                            @solicitud.Zonas.Zona.ToString()<br />
+                                            @if (calificacion.Pago == null)
+                                            {
+                                                <div>
+                                                    <a href="@Url.Action("CalificarUser", "Calificacion", new { id = @servicios.Id_Servicio, idCal = @calificacion.Id_Calificacion })" class="btn btn-danger"><i class="fa fa-heart-o"></i> Calificar Servicio</a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        foreach (var servicios in Model)
+                        {
+                            var solicitud = new Solicitudes();
+                            solicitud = servicios.Presupuestos.Solicitudes;
+                            if (servicios.Estado == "Cancelado")
+                            {
+                                var calificacion = new Calificaciones();
+                                calificacion = servicios.Calificaciones.FirstOrDefault();
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">Servicios Cancelados</div>
+                                    <div class="panel-body">
+                                        <div class="col-md-3">
+                                            <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="header">
+                                                <h4 style="color: #3333FF">Profesión: @solicitud.Profesiones.Desc_Profesion</h4>
+                                                <h4 style="color: #3333FF">Tarea: @solicitud.Tareas.Desc_Tarea</h4>
+                                                <h5>@solicitud.Desc_Solicitud</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @solicitud.Fecha.ToShortDateString() <br />
+                                            @solicitud.Horarios.Horario.ToString()<br />
+                                            @solicitud.Zonas.Zona.ToString()<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @: <div class="text-muted">&nbsp;No se encontraron Servicio.</div>
+                    }
+                </div>
+                <div class="col-md-4 ">
+                    <h2>Agenda</h2>
+                    <div class="agenda">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Evento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var servicios in Model)
+                                    {
+                                        if (servicios.Presupuestos.Hora > DateTime.Now && servicios.Estado =="Confirmado")
+                                        { 
+                                        <!-- Single event in a single day -->
+                                        <tr>
+                                            <td class="agenda-date" class="active" rowspan="1">
+                                                <div class="dayofmonth">@servicios.Presupuestos.Hora.Date.Day</div>
+                                                <div class="dayofweek">@servicios.Presupuestos.Hora.Month</div>
+                                                <div class="shortdate text-muted">@servicios.Presupuestos.Hora.Year.ToString()</div>
+                                            </td>
+                                            <td class="agenda-time">
+                                                @servicios.Presupuestos.Hora.Hour:@servicios.Presupuestos.Hora.Minute.ToString()
+                                            </td>
+                                            <td class="agenda-events">
+                                                <div class="agenda-event">
+                                                    <i class="glyphicon glyphicon-repeat text-muted" title="Repeating event"></i>
+                                                    @servicios.Presupuestos.Solicitudes.Desc_Solicitud
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        }
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -16,6 +16,7 @@ namespace SeguridadWebv2.Controllers
     public class SolicitudesController : Controller
     {
         private ModeloContainer db = new ModeloContainer();
+        
 
         // GET: Solicitudes
         [HttpGet]
@@ -25,8 +26,27 @@ namespace SeguridadWebv2.Controllers
 
             var lista = db.Solicitudes.Where(y => y.Usuarios.Id == IdUsuario).ToList();
 
+            lista.OrderByDescending(x => x.Fecha);
+
             return View(lista.Where(x=>x.Estado != "Realizado").ToList());
         }
+
+        public List<Servis> _maching(Solicitudes _solicitud)
+        {
+            var _ListaServis = new List<Servis>();
+
+            foreach (var servi in db.Servis.Include("ServisProfesiones").ToList())
+            {
+                var prof = servi.ServisProfesiones.Where(x => x.Profesion.Id_Profesion == _solicitud.Profesiones.Id_Profesion).Any();
+                if (prof == true)
+                {
+                    _ListaServis.Add(servi);
+                }
+            }
+
+            return _ListaServis;
+        }
+
 
         // GET: Solicitudes/Details/5
         public ActionResult Details(int id)

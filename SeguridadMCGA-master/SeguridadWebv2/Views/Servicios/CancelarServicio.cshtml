@@ -1,0 +1,19 @@
+﻿@model  SeguridadWebv2.Models.App.Servicios
+@{
+    ViewBag.Title = "Cancelar Servicio";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<h2>Eliminar Zona</h2>
+<hr />
+<h3>¿Esta seguro de eliminar el servicio?</h3>
+<br />
+<h3>@Html.DisplayFor(model => model.Presupuestos.Solicitudes.Desc_Solicitud)</h3>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        @Html.ActionLink("Cancelar", "MisServicios", "Servicios", null, new { @class = "btn btn-default" })
+    </div>
+}

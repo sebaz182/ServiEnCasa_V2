@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SeguridadWebv2.Models.App.Comision>
+@{
+    <script src="//oss.maxcdn.com/bootbox/4.2.0/bootbox.min.js"></script>
+    ViewBag.Title = "Comision";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h2>Comision</h2>
+<hr />
+<div class="container">
+    <div class="row col-md-6 col-md-offset-2 custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Importe de Comisión</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.ImpComision</td>
+                    <td class="text-center">
+                        <a class='btn btn-info btn-xs' href="@Url.Action("Edit","Comision",new { id = c.Id_Comision})"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

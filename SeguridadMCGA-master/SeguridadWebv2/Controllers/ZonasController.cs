@@ -1,5 +1,4 @@
-﻿
-using SeguridadWebv2.Models;
+﻿using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
 using System;
 using System.Collections.Generic;

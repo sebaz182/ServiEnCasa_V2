@@ -38,6 +38,22 @@ namespace SeguridadWebv2
                      "~/Scripts/jquery.dcjqaccordion.2.7.js",
                      "~/Scripts/SeguridadDashboard.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/MorrisCharts").Include(
+                    "~/Content/js/plugins/morris/raphael.min.js",
+                    "~/Content/js/plugins/morris/morris.min.js",
+                    "~/Content/js/plugins/morris/morris-data.js"));
+
+            bundles.Add(new ScriptBundle("~/bundle/FlotCharts").Include(
+                    "~/Content/js/plugins/flot/jquery.flot.js",
+                    "~/Content/js/plugins/flot/jquery.flot.tooltip.min.js",
+                    "~/Content/js/plugins/flot/jquery.flot.resize.js",
+                    "~/Content/js/plugins/flot/jquery.flot.pie.js",
+                    "~/Content/js/plugins/flot/flot-data.js"));
+
+            bundles.Add(new ScriptBundle("~/bundle/Reports").Include(
+                    "~/Content/js/plugins/Message.js",
+                    "~/Scripts/Reports.js"));
+
             /*Estilos*/
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/Content/font-awesome/css/font-awesome.css",

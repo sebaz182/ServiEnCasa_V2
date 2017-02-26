@@ -16,10 +16,10 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                         <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Mi Cuenta", "Contact", "Home")</li>
-                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        @*@if (Request.IsAuthenticated && User.IsInRole("Admin"))*@
+                        @if (Request.IsAuthenticated)
                         {
-                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                            <li>@Html.ActionLink("Mi Cuenta", "Inicio", "Home")</li>
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")
@@ -38,9 +38,9 @@
                     @RenderBody()
                 </section>
             </section>
-            <footer>
+            @*<footer>
                 <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
+            </footer>*@
 </section>
 
         @Scripts.Render("~/bundles/jquery")

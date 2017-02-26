@@ -86,9 +86,9 @@ namespace SeguridadWebv2.Models
         public async Task SendAsync(IdentityMessage message)
         {
                 // Plug in your email service here to send an email.
-                var credentialUserName = "finalmcga@gmail.com";
-                var sentFrom = "finalmcga@gmail.com";
-                var pwd = "finalmcga123";
+                var credentialUserName = "serviencasa.ros@gmail.com";
+                var sentFrom = "serviencasa.ros@gmail.com";
+                var pwd = "A2017A2017";
 
                 // Configure the client:
                 System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com");

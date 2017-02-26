@@ -22,11 +22,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    <li>@Html.ActionLink("Mi Cuenta", "Inicio", "Home")</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                        <li>@Html.ActionLink("Mi Cuenta", "Inicio", "Home")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -56,6 +57,21 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/adminPanelJs")
-    @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/bundle/Reports")
+
+    <!-- jQuery -->
+    <script src="~/Content/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!--<script src="~/Content/js/bootstrap.min.js"></script>-->
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/bundles/MorrisCharts")
+
+    <!-- Flot Charts JavaScript -->
+    <!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->
+    @Scripts.Render("~/bundle/FlotCharts")
+
 </body>
 </html>

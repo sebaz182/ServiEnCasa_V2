@@ -14,14 +14,14 @@ namespace SeguridadWebv2.Models.App
         {
             this.Credito = 0m;
             this.Debito = 0m;
-            this.Importe = 0m;
         }
 
         [Key]
         public int Id_CtaCorriente { get; set; }
-        public decimal Credito { get; set; }
-        public decimal Debito { get; set; }
-        public decimal Importe { get; set; }
+        public Nullable<decimal>  Credito { get; set; }
+        public Nullable<decimal> Debito { get; set; }
+        public string Detalle { get; set; }
+        public DateTime Fecha { get; set; }
 
         public virtual Servis Servis { get; set; }
     }

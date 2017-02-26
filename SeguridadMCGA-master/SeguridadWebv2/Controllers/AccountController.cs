@@ -19,6 +19,19 @@ namespace SeguridadWebv2.Controllers
         {
         }
 
+        private GrupoManager _groupManager;
+        public GrupoManager GroupManager
+        {
+            get
+            {
+                return _groupManager ?? new GrupoManager();
+            }
+            private set
+            {
+                _groupManager = value;
+            }
+        }
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -152,9 +165,20 @@ namespace SeguridadWebv2.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Nombre = model.Nombre, Apellido = model.Apellido, Estado = model.Estado };
+                user.Calificacion = 0;
+                user.CantServicios = 0;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await this.UserManager.AddToRoleAsync(user.Id, "Users");
+                    string selectedGroups = "Users";
+                    if (selectedGroups != null)
+                    {
+                        //selectedGroups = selectedGroups ?? new string[] { };
+                        //await this.GroupManager
+                        //    .SetUserGroupsAsync(user.Id, selectedGroups);
+                    }
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirmar su cuenta", "Por favor para confirmar su cuenta haga click en el siguiente enlace: <a href=\"" + callbackUrl + "\">link</a>");

@@ -16,6 +16,18 @@ namespace SeguridadWebv2.Models
         public string profesion { get; set; }
     }
 
+    public class GeneralConfirmacionVM
+    {
+        public Solicitudes Solicitud { get; set; }
+        public Presupuestos Presupuesto { get; set; }
+        public CrearServicioVm CrearServicio { get; set; }
+    }
+
+    public class CrearServicioVm
+    {
+        public int idServicio { get; set; }
+    }
+
     public class GeneralPresupuestoVM
     {
         public Solicitudes Solicitud { get; set; }
@@ -24,7 +36,7 @@ namespace SeguridadWebv2.Models
 
     public class CrearPresupuestoViewModels
     {
-        [Required]
+        //[Required]
         [Display(Name = "Profesion")]
         public string profesion { get; set; }
 
@@ -41,8 +53,6 @@ namespace SeguridadWebv2.Models
         public DateTime hora { get; set; }
 
         public int idSolicitud { get; set; }
-
-
     }
 
     public class CrearTareaViewModel
@@ -207,6 +217,15 @@ namespace SeguridadWebv2.Models
         [Required]
         [Display(Name = "Zona")]
         public string zona { get; set; }
+    }
+
+    public class ComisionViewModel
+    {
+        public int id { get; set; }
+
+        [Required]
+        [Display(Name = "Importe de la Comisión:  $")]
+        public decimal importe { get; set; }
     }
 
 

@@ -30,6 +30,8 @@ namespace SeguridadWebv2.Models
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public bool Estado { get; set; }
+        public int? Calificacion { get; set; }
+        public int? CantServicios { get; set; }
 
         public async Task<ClaimsIdentity>
             GenerateUserIdentityAsync(ApplicationUserManager manager)
@@ -92,6 +94,9 @@ namespace SeguridadWebv2.Models
         public virtual DbSet<Profesiones> Profesiones { get; set; }
         public virtual DbSet<ServisTareas> ServiTareas { get; set; }
         public virtual DbSet<ServisProfesiones> ServisProfesiones { get; set; }
+        public virtual DbSet<Calificaciones> Calificaciones { get; set; }
+        public virtual DbSet<Comision> Comision { get; set; }
+        public virtual DbSet<CuentaCorriente> CuentaCorriente { get; set; }
         // Override OnModelsCreating:
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

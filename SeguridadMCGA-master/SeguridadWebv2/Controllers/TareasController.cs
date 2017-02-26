@@ -76,7 +76,7 @@ namespace SeguridadWebv2.Controllers
             {
                 return RedirectToAction("Index");
             }
-        }
+            }
 
         // GET: Tareas/Edit/5
         public ActionResult Edit(int id)

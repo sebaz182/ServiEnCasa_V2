@@ -1,0 +1,69 @@
+﻿@*calificacion del servi hacia el usuario*@
+@model SeguridadWebv2.Models.ClasificacionesViewModel
+
+@{
+    ViewBag.Title = "Calificar User";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<head>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/star-rating.css" media="all" type="text/css" />
+    @*<link rel="stylesheet" href="~/Content/css/themes/krajee-fa/theme.css" media="all" type="text/css" />
+        <link rel="stylesheet" href="~/Content/css/themes/krajee-svg/theme.css" media="all" type="text/css" />
+        <link rel="stylesheet" href="~/Content/css/themes/krajee-uni/theme.css" media="all" type="text/css" />*@
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="~/Content/js/star-rating.js" type="text/javascript"></script>
+    @*<script src="~/Content/js/themes/krajee-fa/theme.js" type="text/javascript"></script>
+        <script src="~/Content/js/themes/krajee-svg/theme.js" type="text/javascript"></script>
+        <script src="~/Content/js/themes/krajee-uni/theme.js" type="text/javascript"></script>*@
+</head>
+<body>
+    <h2>Calificar Usuario</h2>
+    @using (Html.BeginForm("CalificarUser", "Calificacion", FormMethod.Post))
+    {
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.HiddenFor(model => model.idCal)
+                        @Html.HiddenFor(model => model.Servicio.Id_Servicio)
+                        @Html.HiddenFor(model => model.pago)
+                        <br>
+                        <h4>1- Al terminar el Trabajo, ¿Usted cobro segun lo pactado en el presupuesto?</h4>
+                        <label>Si</label>
+                        <input type="radio" name="completed" value="true" checked onchange="TrackChange()" />
+                        <label>No</label>
+                        <input type="radio" name="completed" value="false" onchange="TrackChange()" />
+                        <br>
+                        <div>
+                            <h4>2- ¿Cómo calificaria al Ciente?</h4>
+                            @Html.EditorFor(model => model.cal_usuario, new { htmlAttributes = new { @class = "rating rating-loading", data_size = "lg", title = "calTrabajo" } })
+                            @*<input type="text" class="rating rating-loading" value="2.5" data-size="lg" title="calTrabajo">*@
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">3- Comentarios:</label>
+                            @Html.TextAreaFor(model => model.obs_DelServi, new { htmlAttributes = new { id = "comment", rows = "5", style = "width:50%" } })
+                            @*<textarea class="form-control" rows="5" id="comment" style="width:50%"></textarea>*@
+                        </div>
+                        <input type="submit" value="Aceptar" class="btn btn-success" />
+                        @Html.ActionLink("Cancelar", "MisServicios", "Servicios", null, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+
+<script>
+			function TrackChange(){
+				$("#model_completed").val($("input[name='completed']:checked").val() == "yes");
+			}
+</script>
+
+
+
+
+

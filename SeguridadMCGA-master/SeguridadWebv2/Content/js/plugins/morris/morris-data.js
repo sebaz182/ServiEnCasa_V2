@@ -1,6 +1,94 @@
 // Morris.js Charts sample data for SB Admin template
 
-$(function() {
+
+
+$(function () {
+
+    $.ajax("../ReportServices/DonutCharts", {
+        dataType: 'json',
+        data: {
+            format: 'json'
+        },
+        success: function (result) {
+            Morris.Donut({
+                element: 'morris-donut-chart',
+                data:result,
+                resize: true
+            });
+        },
+        error: function () {
+            alert('An error occurred load donut Chart');
+        }
+    });
+
+
+    //Donut Chart
+    //Morris.Donut({
+    //    element: 'morris-donut-chart',
+    //    data: [{
+    //        label: "Usuarios",
+    //        value: 304
+    //    }, {
+    //        label: "Servis",
+    //        value: 75
+    //    }, {
+    //        label: "Administradores",
+    //        value: 8
+    //    }],
+    //    resize: true
+    //});
+
+    // Bar Chart
+
+        $.ajax("../ReportServices/BarChars", {
+            dataType: 'json',
+            data: {
+                format: 'json'
+            },
+            success: function (result) {
+                Morris.Bar({
+                    element: 'morris-bar-chart',
+                    data:result,
+                    xkey: 'device',
+                    ykeys: ['geekbench'],
+                    labels: ['Solicitudes'],
+                    barRatio: 0.4,
+                    xLabelAngle: 35,
+                    hideHover: 'auto',
+                    resize: true
+                });
+            },
+            error: function () {
+                alert('An error occurred load donut Chart');
+            }
+        });
+
+    //Morris.Bar({
+    //    element: 'morris-bar-chart',
+    //    data: [{
+    //        device: 'Electricista',
+    //        geekbench: 200
+    //    }, {
+    //        device: 'Gasista',
+    //        geekbench: 270
+    //    }, {
+    //        device: 'Cerrajero',
+    //        geekbench: 80
+    //    }, {
+    //        device: 'Serv. AA',
+    //        geekbench: 150
+    //    }, {
+    //        device: 'Serv. Domestico',
+    //        geekbench: 444
+    //    }],
+    //    xkey: 'device',
+    //    ykeys: ['geekbench'],
+    //    labels: ['Geekbench'],
+    //    barRatio: 0.4,
+    //    xLabelAngle: 35,
+    //    hideHover: 'auto',
+    //    resize: true
+    //});
 
     // Area Chart
     Morris.Area({
@@ -61,22 +149,6 @@ $(function() {
         labels: ['iPhone', 'iPad', 'iPod Touch'],
         pointSize: 2,
         hideHover: 'auto',
-        resize: true
-    });
-
-    // Donut Chart
-    Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{
-            label: "Download Sales",
-            value: 12
-        }, {
-            label: "In-Store Sales",
-            value: 30
-        }, {
-            label: "Mail-Order Sales",
-            value: 20
-        }],
         resize: true
     });
 
@@ -192,36 +264,7 @@ $(function() {
         resize: true
     });
 
-    // Bar Chart
-    Morris.Bar({
-        element: 'morris-bar-chart',
-        data: [{
-            device: 'iPhone',
-            geekbench: 136
-        }, {
-            device: 'iPhone 3G',
-            geekbench: 137
-        }, {
-            device: 'iPhone 3GS',
-            geekbench: 275
-        }, {
-            device: 'iPhone 4',
-            geekbench: 380
-        }, {
-            device: 'iPhone 4S',
-            geekbench: 655
-        }, {
-            device: 'iPhone 5',
-            geekbench: 1571
-        }],
-        xkey: 'device',
-        ykeys: ['geekbench'],
-        labels: ['Geekbench'],
-        barRatio: 0.4,
-        xLabelAngle: 35,
-        hideHover: 'auto',
-        resize: true
-    });
+    
 
 
 });

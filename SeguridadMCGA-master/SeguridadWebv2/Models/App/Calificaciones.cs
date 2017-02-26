@@ -17,9 +17,10 @@ namespace SeguridadWebv2.Models.App
 
         [Key]
         public int Id_Calificacion { get; set; }
-        public string Obs_Servi { get; set; }
-        public string Obs_Usuario { get; set; }
+        public string Obs_DelServi { get; set; }
+        public string Obs_DelUsuario { get; set; }
         public Nullable<bool> Cumplimiento { get; set; }
+        public Nullable<bool> Pago { get; set; }
         public Nullable<int> Cal_Servi { get; set; }
         public Nullable<int> Cal_Usuario { get; set; }
         public Nullable<int> Cal_Trabajo { get; set; }

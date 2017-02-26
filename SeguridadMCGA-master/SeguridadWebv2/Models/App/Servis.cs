@@ -22,6 +22,10 @@ namespace SeguridadWebv2.Models.App
         public string DNI { get; set; }
         public string Matricula { get; set; }
         public string Foto { get; set; }
+        public int? CalTareas { get; set; }
+
+
+
 
         public virtual ICollection<ServisProfesiones> ServisProfesiones { get; set; }
         public virtual ICollection<ServisTareas> ServisTareas { get; set; }

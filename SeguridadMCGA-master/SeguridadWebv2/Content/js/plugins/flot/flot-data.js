@@ -5,6 +5,12 @@ $(document).ready(function() {
     console.log("document ready");
     var offset = 0;
     //plot();
+    GetCounts("Solicitudes", "../ReportServices/SolicitudesCount", $('#cSolicitudes'));
+    GetCounts("Presupuestos", "../ReportServices/PresupuestosCount", $('#cPresupuestos'));
+    GetCounts("Servicios", "../ReportServices/ServiciosCount", $('#cServicios'));
+    GetCounts("No Presupuestados", "../ReportServices/NoPresupuestadosCount", $('#cNoPresupuestados'));
+
+
 
     function plot() {
         var sin = [],
@@ -53,38 +59,103 @@ $(document).ready(function() {
 
 // Flot Pie Chart with Tooltips
 $(function() {
+    var data = "";
+    //var data = [{
+    //    label: "Series 0",
+    //    data: 1
+    //}, {
+    //    label: "Series 1",
+    //    data: 3
+    //}, {
+    //    label: "Series 2",
+    //    data: 9
+    //}, {
+    //    label: "Series 3",
+    //    data: 20
+    //}];
 
-    var data = [{
-        label: "Series 0",
-        data: 1
-    }, {
-        label: "Series 1",
-        data: 3
-    }, {
-        label: "Series 2",
-        data: 9
-    }, {
-        label: "Series 3",
-        data: 20
-    }];
+    $.ajax("../ReportServices/PieChart", {
+        dataType: 'json',
+        data: {
+               format: 'json'
+        },
+        success: function (result) {
+            data = result;
 
-    var plotObj = $.plot($("#flot-pie-chart"), data, {
-        series: {
-            pie: {
-                show: true
-            }
+            var plotObj = $.plot($("#flot-pie-chart"), data, {
+                series: {
+                    pie: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                    shifts: {
+                        x: 20,
+                        y: 0
+                    },
+                    defaultTheme: false
+                }
+            });
         },
-        grid: {
-            hoverable: true
+        error: function () {
+            alert('An error occurred');
+        }
+    });
+
+});
+
+// Flot Pie Chart with Tooltips
+$(function() {
+    var data = "";
+    //var data = [{
+    //    label: "Series 0",
+    //    data: 1
+    //}, {
+    //    label: "Series 1",
+    //    data: 3
+    //}, {
+    //    label: "Series 2",
+    //    data: 9
+    //}, {
+    //    label: "Series 3",
+    //    data: 20
+    //}];
+
+    $.ajax("../ReportServices/PieChart", {
+        dataType: 'json',
+        data: {
+               format: 'json'
         },
-        tooltip: true,
-        tooltipOpts: {
-            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-            shifts: {
-                x: 20,
-                y: 0
-            },
-            defaultTheme: false
+        success: function (result) {
+            data = result;
+
+            var plotObj = $.plot($("#flot-pie-chart"), data, {
+                series: {
+                    pie: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                    shifts: {
+                        x: 20,
+                        y: 0
+                    },
+                    defaultTheme: false
+                }
+            });
+        },
+        error: function () {
+            alert('An error occurred');
         }
     });
 

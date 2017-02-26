@@ -6,16 +6,32 @@
 <header id="intro">
     @Html.Partial("_SolicitudPartial")
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </header>
+
+<div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Efv0KwUB3gA?rel=0&amp;showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <div class="row">
         <div class="col-md-4">
             <h2>Getting started</h2>
             <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
             </p>
             <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
         </div>
@@ -76,3 +92,11 @@
         });
     </script>
 }
+
+<script>
+   $(document).ready(function()
+   {
+      $("#mostrarmodal").modal("show");
+   });
+</script>
+
