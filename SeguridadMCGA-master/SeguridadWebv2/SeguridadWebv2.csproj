@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CalificacionController.cs" />
     <Compile Include="Controllers\ComisionController.cs" />
     <Compile Include="Controllers\CuentaCorrienteController.cs" />
+    <Compile Include="Controllers\APIMercadoPagoController.cs" />
     <Compile Include="Controllers\PresupuestosController.cs" />
     <Compile Include="Controllers\ProfesionesController.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
@@ -161,6 +162,8 @@
     <Compile Include="Controllers\SolicitudesController.cs" />
     <Compile Include="Controllers\TareasController.cs" />
     <Compile Include="Controllers\ZonasController.cs" />
+    <Compile Include="Helpers\Items.cs" />
+    <Compile Include="Helpers\PreferencesMP.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdministradorViewModel.cs" />
     <Compile Include="Models\App\Calificaciones.cs" />

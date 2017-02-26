@@ -18,6 +18,24 @@ namespace SeguridadWebv2
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "DoCheckout",
+                url: "APIMercadoPago/DoCheckout",
+                defaults: new { controller = "APIMercadoPago", action = "DoCheckout" }
+                );
+
+            routes.MapRoute(
+                name: "CheckoutStatus",
+                url: "APIMercadoPago/CheckoutStatus",
+                defaults: new { controller = "APIMercadoPago", action = "CheckoutStatus" }
+                );
+
+            routes.MapRoute(
+                name: "PaymentNotification",
+                url: "APIMercadoPago/Notification",
+                defaults: new { controller = "APIMercadoPago", action = "Notification" }
+                );
         }
     }
 }
