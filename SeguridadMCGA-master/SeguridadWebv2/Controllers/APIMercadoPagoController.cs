@@ -6,37 +6,38 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System;
+using Microsoft.AspNet.Identity;
+using SeguridadWebv2.Models;
+using SeguridadWebv2.Models.App;
 
 namespace SeguridadWebv2.Controllers
 {
     public class APIMercadoPagoController : Controller
     {
+        private CuentaCorrienteController _CuentaCorriente = new CuentaCorrienteController();
+        private ModeloContainer db = new ModeloContainer();
+
         public ActionResult Index()
         {
             return View();
         }
-        [HttpGet]
-        public void MercadoPago()
-        {
-            MP mp = new MP(ConfigurationManager.AppSettings["MPClientID"], ConfigurationManager.AppSettings["MPSecret"]);
-
-            string item = "{\"items\":[{\"title\":\"Testing\",\"quantity\":1,\"currency_id\":\"ARS\",\"unit_price\":10.5}]}";
-            Hashtable preference = mp.createPreference(item);
-
-            var resultado = (Hashtable)((ArrayList)((Hashtable)preference["response"])["items"])[0];
-        }
-
 
         [HttpPost]
         public ActionResult DoCheckout()
         {
+            decimal _saldo = 0;
+            var saldo = Request["saldo"];
+            Decimal.TryParse(saldo, out _saldo);
+
+            
             var pf = new PreferencesMP
             {
                 items = new List<Items>()
                 {
                     new Items() {
                         currency_id = "ARS",
-                        unit_price = 123,
+                        unit_price = _saldo,
                         quantity = 1,
                         title = "Pago de comisión por servicios de ServiEnCasa"
                     }
@@ -49,39 +50,31 @@ namespace SeguridadWebv2.Controllers
                 items = pf.items.Select(i => new { title = i.title, quantity = i.quantity, currency_id = i.currency_id, unit_price = i.unit_price }).ToArray(),
                 back_urls = new
                 {
-                    success = "http://" + Request.Url + Url.RouteUrl("CheckoutStatus"),
-                    failure = "http://" + Request.Url + Url.RouteUrl("CheckoutStatus"),
-                    pending = "http://" + Request.Url + Url.RouteUrl("CheckoutStatus")
+                    success = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus"),
+                    failure = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus"),
+                    pending = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus")
                 }
             };
             Hashtable preference = mp.createPreference(JsonConvert.SerializeObject(data));
 
             string MPRefID = (string)((Hashtable)preference["response"])["id"];
 
+            var _pago = new Pagos();
+
+            _pago.Estado = "Pemdiente";
+            _pago.Importe = _saldo;
+            _pago.MPRefID = MPRefID;
+
+            db.Pagos.Add(_pago);
+
+            db.SaveChanges();
+
             return Json(new { url = (string)((Hashtable)preference["response"])[ConfigurationManager.AppSettings["MPUrl"]] });
-        }
-
-        public class StatusMP
-        {
-            public StatusMP()
-            {
-                Items = new List<Items>();
-            }
-
-            public string MPRefID { get; set; }
-            public string MPCollectionID { get; set; }
-            public IList<Items> Items { get; set; }
-            public string Status { get; set; }
         }
 
         [HttpGet]
         public ActionResult CheckoutStatus(string collection_id, string collection_status, string preference_id, string external_reference, string payment_type, string merchant_order_id)
         {
-            var pepe = RouteData.Values["preference_id"] + Request.Url.Query;
-            var pepe2 = RouteData.Values["collection_status"] + Request.Url.Query;
-            var pepe3 = RouteData.Values["collection_id"] + Request.Url.Query;
-            float ExchangeRate = 5.5F;
-
             string mpRefID = Request["preference_id"];
             string status = Request["collection_status"];
             string collectionID = Request["collection_id"];
@@ -96,6 +89,8 @@ namespace SeguridadWebv2.Controllers
                 string collection = collectionID;
                 string stado = status;
 
+                string _IdServi = User.Identity.GetUserId();
+
                 //NotifyUserOrderStatus();
                 StatusMP statuscode = new StatusMP()
                 {
@@ -103,7 +98,17 @@ namespace SeguridadWebv2.Controllers
                     MPCollectionID = collection,
                     MPRefID = order
                 };
-                return View("Status", statuscode);
+
+                if (stado == "approved")
+                {
+                    var _pago = db.Pagos.Where(x => x.MPRefID == order).FirstOrDefault();
+                    _pago.Estado = "Aprobado";
+                    _CuentaCorriente._generarCredito(_IdServi,mpRefID, _pago.Importe );
+
+                    db.Entry(_pago).State = System.Data.Entity.EntityState.Modified;
+                }
+
+                return View("../CuentaCorriente/Status", statuscode);
             }
         }
 

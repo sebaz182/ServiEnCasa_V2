@@ -139,7 +139,7 @@ namespace SeguridadWebv2.Models
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ModeloContainer>
+    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ModeloContainer>
     {
         protected override void Seed(ModeloContainer context)
         {

@@ -16,12 +16,12 @@
                         {
                             var solicitud = new Solicitudes();
                             solicitud = servicios.Presupuestos.Solicitudes;
-                            if (servicios.Estado == "Confirmado" && servicios.Presupuestos.Hora < DateTime.Now)
+                            if (servicios.Estado == "Confirmado" )
                             {
                                 var calificacion = new Calificaciones();
                                 calificacion = servicios.Calificaciones.FirstOrDefault();
                                 <div class="panel panel-success">
-                                    <div class="panel-heading">Servicios Confirmado</div>
+                                    <div class="panel-heading">Servicios a Realizar</div>
                                     <div class="panel-body">
                                         <div class="col-md-3">
                                             <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />
@@ -52,7 +52,7 @@
                                 var calificacion = new Calificaciones();
                                 calificacion = servicios.Calificaciones.FirstOrDefault();
                                 <div class="panel panel-info">
-                                    <div class="panel-heading">Servicios Confirmado</div>
+                                    <div class="panel-heading">Servicios Realizados</div>
                                     <div class="panel-body">
                                         <div class="col-md-3">
                                             <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />

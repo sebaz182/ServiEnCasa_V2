@@ -11,88 +11,108 @@
 @Html.AntiForgeryToken()
 @using (Html.BeginForm("ConfirmarContratacion", "Servicios", new { idpresupuesto = Model.Presupuesto.Id_Presupuesto, idsolicitud = Model.Solicitud.Id_Solicitud }, FormMethod.Post))
 {
-<div>
-    @* Solicitud *@
-    <h2 style="color:lightcoral">. . . . Solicitud</h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                @if (Model.Solicitud != null)
+    <div class="col-md-12">
+        <div class="col-lg-8">
+            @* Solicitud *@
+            <h2 style="color:lightcoral">. Tu Solicitud</h2>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        @if (Model.Solicitud != null)
                 {
                     var solicitud = Model.Solicitud;
-                    <div class="col-md-8">
-                        <div class="panel panel-danger">
-                            <div class="panel-body">
-                                <div class="col-md-3">
-                                    <img src="@Url.Content(solicitud.Foto.ToString())" class="img-responsive" />
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="header">
-                                        <h4 style="color: #3333FF">Profesión: @solicitud.Profesiones.Desc_Profesion</h4>
-                                        <h4 style="color: #3333FF">Tarea: @solicitud.Tareas.Desc_Tarea</h4>
-                                        <h5>@solicitud.Desc_Solicitud</h5>
+                            <div class="col-md-7">
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        <div class="col-md-4">
+                                            <img src="@Url.Content(solicitud.Foto.ToString())" onmouseover="this.width=600;this.height=480;" onmouseout="this.width=200;this.height=160;" width="200" height="160" alt="" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="header">
+                                                <h3 style="color: #3333FF">Pediste un @solicitud.Profesiones.Desc_Profesion</h3>
+                                                <h3 style="color: #3333FF">Para la tarea de @solicitud.Tareas.Desc_Tarea</h3>
+                                                <h5>Descripción: @solicitud.Desc_Solicitud</h5>
+                                                Para la Fecha: @solicitud.Fecha.ToShortDateString() <br />
+                                                En el rango horario de @solicitud.Horarios.Horario.ToString()<br />
+                                                Para la Zona: @solicitud.Zonas.Zona.ToString()<br />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    @solicitud.Fecha <br />
-                                    @solicitud.Horarios.Horario.ToString()<br />
-                                    @solicitud.Zonas.Zona.ToString()<br />
-                                </div>
                             </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            @* Presupuesto *@
+            <h2 style="color:lightcoral">. Datos del Presupuesto</h2>
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            @if (Model.Presupuesto != null)
+                            {
+                                var presupuesto = Model.Presupuesto;
+                                var servi = new Servis();
+                                servi = presupuesto.Servis.FirstOrDefault();
+                                <div class="col-md-7">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <h4><strong>El Servi ha realizado el siguiente presupuesto para vos!</strong></h4>
+                                                <div class="header col-md-9">
+                                                    <h4 style="color: #3333FF">@servi.Nombre @servi.Apellido </h4>
+                                                    <h5><strong>Descripcion del Presupuesto: </strong>@presupuesto.Observacion</h5>
+                                                    <h5><strong>Para la Fecha: </strong>@presupuesto.Hora.ToShortDateString()</h5>
+                                                    <h5><strong>A la Hora: </strong>@presupuesto.Hora.ToShortTimeString()</h5>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <h2 style="color:red"><strong>$ @presupuesto.Precio</strong></h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
-                }
-            </div>
-        </div>
-    </div>
-    @* Presupuesto *@
-    <h2 style="color:lightcoral">. . . . Presupuesto</h2>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    @if (Model.Presupuesto != null)
-                    {
-                        var presupuesto = Model.Presupuesto;
-                        var servi = new Servis();
-                        servi = presupuesto.Servis.FirstOrDefault();
-                        <div class="col-md-8">
-                            <div class="panel panel-danger">
-                                <div class="panel-body">
-                                    <div class="col-md-3">
-                                        <img src="@Url.Content(servi.Foto.ToString())" class="img-circle img-responsive" />
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="header">
-                                            <h4 style="color: #3333FF">@servi.Nombre @servi.Apellido </h4>
-                                            <h5>@presupuesto.Observacion</h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @presupuesto.Hora <br />
-                                        <h2 style="color:red">$ @presupuesto.Precio</h2>
-                                        <div>
-                                            @*<a href="@Url.Action("ConfirmarContratacion", "Servicios", new { id = @presupuestos.Id_Presupuesto })" class="btn btn-primary btn-lg">Contratar</a>*@
-                                            @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalContratar" >
-                                                    Contratar
-                                                </button>*@
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </div>
-    </div>
-    @* Botones de Aceptar *@
-    <div class="form-group">
-        <div class="col-md-offset-1 col-md-10">
-            <br />
-            <input type="submit" value="Aceptar" class="btn btn-success" />
-            @Html.ActionLink("Cancelar", "MisSolicitudes", "Solicitudes", null , new { @class = "btn btn-default" })
+        <div class="col-md-3 centered">
+            <div class=" col-md-12">
+                @if (Model.Presupuesto != null)
+                {
+                    var presupuesto = Model.Presupuesto;
+                    var servi = new Servis();
+                    servi = presupuesto.Servis.FirstOrDefault();
+                    <div>
+                        <img src="@Url.Content(servi.Foto.ToString())" class="img-circle img-responsive" />
+                    </div>
+                    <h4><strong>Datos del Servi</strong></h4>
+                    <hr  style="border-width:4px; background-color:black ">
+                    <h4><strong>@servi.Nombre @servi.Apellido</strong></h4>
+                    int? calServi = servi.Calificacion;
+                    int? calTareas = servi.CalTareas;
+                    if (servi.CantServicios != 0)
+                    {
+                        calServi = calServi / servi.CantServicios;
+                        calTareas = calTareas / servi.CantServicios;
+                    }
+                    <h4>Calificación: @calServi <span class="glyphicon glyphicon-star"></span></h4>
+                    <h4>Calif. de Tareas: @calTareas <span class="glyphicon glyphicon-star"></span></h4>
+                    <h4>Cant. de Servicios: @servi.CantServicios</h4>
+
+                }
+            </div>
+        </div>
+        @* Botones de Aceptar *@
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <br />
+                <input type="submit" value="Aceptar" class="btn btn-success" />
+                @Html.ActionLink("Cancelar", "MisSolicitudes", "Solicitudes", null, new { @class = "btn btn-default" })
+            </div>
         </div>
     </div>
-</div>
 }

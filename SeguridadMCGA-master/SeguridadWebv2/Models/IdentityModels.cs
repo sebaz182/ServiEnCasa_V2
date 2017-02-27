@@ -97,6 +97,7 @@ namespace SeguridadWebv2.Models
         public virtual DbSet<Calificaciones> Calificaciones { get; set; }
         public virtual DbSet<Comision> Comision { get; set; }
         public virtual DbSet<CuentaCorriente> CuentaCorriente { get; set; }
+        public virtual DbSet<Pagos> Pagos { get; set; }
         // Override OnModelsCreating:
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

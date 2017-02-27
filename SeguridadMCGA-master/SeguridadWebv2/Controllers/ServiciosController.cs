@@ -33,9 +33,7 @@ namespace SeguridadWebv2.Controllers
 
             var lista = dbContext.Servicios.Where(x => x.Presupuestos.Solicitudes.Usuarios.Id == IdUsuario).ToList();
 
-            lista.OrderByDescending(x => x.Presupuestos.Hora);
-
-            return View(lista.ToList());
+            return View(lista.ToList().OrderByDescending(x => x.Presupuestos.Hora));
         }
 
         //[Authorize(Roles = "Servis, AllGrupos")]
@@ -45,9 +43,7 @@ namespace SeguridadWebv2.Controllers
 
             var lista = dbContext.Servicios.Where(x => x.Presupuestos.Servis.Any(y => y.Id == IdUsuario)).ToList();
 
-            lista.OrderByDescending(x => x.Presupuestos.Hora);
-
-            return View(lista.ToList());
+            return View(lista.ToList().OrderByDescending(x=>x.Presupuestos.Hora));
         }
 
         [HttpGet]
