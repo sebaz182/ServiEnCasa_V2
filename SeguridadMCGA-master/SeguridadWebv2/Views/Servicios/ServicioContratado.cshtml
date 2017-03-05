@@ -1,0 +1,78 @@
+﻿@using SeguridadWebv2.Models.App
+@model SeguridadWebv2.Models.ServicioContratadoVM
+@{
+    ViewBag.Title = "ServicioContratado";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h2>ServicioContratado</h2>
+
+<div class="col-md-12">
+    <div class="container col-md-9">
+        <div class="row">
+            <div>
+                @if (Model.servicio != null)
+                {
+                    var servicio = Model.servicio;
+                    var servi = new Servis();
+                    servi = servicio.Presupuestos.Servis.FirstOrDefault();
+                    <div class="col-md-7">
+                        <div class="panel panel-danger">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <h4><strong>El Servi ha realizado el siguiente presupuesto para vos!</strong></h4>
+                                    <div class="header col-md-9">
+                                        <h4 style="color: #3333FF">@servi.Nombre @servi.Apellido </h4>
+                                        <h5><strong>Descripcion del Presupuesto: </strong>@servicio.Presupuestos.Observacion</h5>
+                                        <h5><strong>Para la Fecha: </strong>@servicio.Presupuestos.Hora.ToShortDateString()</h5>
+                                        <h5><strong>A la Hora: </strong>@servicio.Presupuestos.Hora.ToShortTimeString()</h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h2 style="color:red"><strong>$ @servicio.Presupuestos.Precio</strong></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 centered">
+        <div class=" col-md-12">
+            @if (Model.servicio != null)
+            {
+                var servicio = Model.servicio;
+                var servi = new Servis();
+                servi = servicio.Presupuestos.Servis.FirstOrDefault();
+
+                <div>
+                    <img src="@Url.Content(servi.Foto.ToString())" class="img-circle img-responsive" />
+                </div>
+                <h4><strong>Datos del Servi</strong></h4>
+                    <hr style="border-width:4px; background-color:black ">
+                    <h4><strong>@servi.Nombre @servi.Apellido</strong></h4>
+                int? calServi = servi.Calificacion;
+                int? calTareas = servi.CalTareas;
+                if (servi.CantServicios != 0)
+                {
+                    calServi = calServi / servi.CantServicios;
+                    calTareas = calTareas / servi.CantServicios;
+                }
+                <h4>Calificación: @calServi <span class="glyphicon glyphicon-star"></span></h4>
+                <h4>Calif. de Tareas: @calTareas <span class="glyphicon glyphicon-star"></span></h4>
+                <h4>Cant. de Servicios: @servi.CantServicios</h4>
+                <h4><strong>Teléfono:</strong> @servi.PhoneNumber.ToString()</h4>
+            }
+        </div>
+    </div>
+    <div class="alert">
+        <br />
+        <br />
+        <a href="@Url.Action("Inicio", "Home")" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-ok-circle"></span> Ir al Inicio </a>
+    </div>
+</div>
+
+
+
+

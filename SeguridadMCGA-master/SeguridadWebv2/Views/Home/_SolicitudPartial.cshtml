@@ -65,7 +65,10 @@
                                             </div>
                                             <script type="text/javascript">
                                                 $(function () {
-                                                    $('#datetimepicker1').datepicker();
+                                                    $('#datetimepicker1').datepicker({
+                                                        startDate: '-0d',
+                                                        todayHighlight: 'TRUE'
+                                                    });
                                                 });
                                             </script>
                                         </div>

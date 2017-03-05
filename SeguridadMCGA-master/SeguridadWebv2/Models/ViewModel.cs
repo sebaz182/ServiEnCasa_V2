@@ -16,6 +16,20 @@ namespace SeguridadWebv2.Models
         public string profesion { get; set; }
     }
 
+    public class ServicioContratadoVM
+    {
+        public Servicios servicio { get; set; }
+    }
+
+    public class ReportesVM
+    {
+        public IEnumerable<Servicios> servicios { get; set; }
+        public IEnumerable<Presupuestos> presupuestos { get; set; }
+        public IEnumerable<Solicitudes> solicitudes { get; set; }
+        public IEnumerable<CuentaCorriente> cuentaCorriente { get; set; }
+        public IEnumerable<Pagos> pagos { get; set; }
+    }
+
     public class GeneralConfirmacionVM
     {
         public Solicitudes Solicitud { get; set; }

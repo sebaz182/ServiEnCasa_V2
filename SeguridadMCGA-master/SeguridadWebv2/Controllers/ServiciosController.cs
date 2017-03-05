@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
 using System;
@@ -114,6 +115,7 @@ namespace SeguridadWebv2.Controllers
                 var solicitud = dbContext.Solicitudes.FirstOrDefault(x => x.Id_Solicitud == idsolicitud);
                 var presMod = CambiaEstadoPres(presupuesto);
                 var solMod = CambiaEstadoSol(solicitud);
+                var servi = presupuesto.Servis.FirstOrDefault();
 
                 if (presupuesto != null)
                 {
@@ -125,20 +127,52 @@ namespace SeguridadWebv2.Controllers
                     dbContext.Entry(presMod).State = System.Data.Entity.EntityState.Modified;
 
                     dbContext.Servicios.Add(servicio);
-
+                    
                     dbContext.SaveChanges();
+
+                    var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                    userManager.SendEmail(solicitud.Usuarios.Id, "Felicitaciones por tu contratación!", "Felicitaciones... "+solicitud.Usuarios.Nombre.ToString()+ " "+solicitud.Usuarios.Apellido.ToString() + " \n Contrataste los servicios de " + servi.Nombre.ToString() +" "+servi.Apellido.ToString()+" \n Matricula: "+servi.Matricula.ToString() + " \n Comunícate con el Servi para pasarle tus datos al teléfono: " + servi.PhoneNumber.ToString() +" \n Exitos!!!");
+
+                    userManager.SendEmail(servi.Id, "Felicitaciones Nuevo Tabajo", "Felicitaciones usted ha sido contratado por: " + solicitud.Usuarios.Nombre.ToString() + " " + solicitud.Usuarios.Apellido.ToString() + " \nPara la tarea de  " +solicitud.Desc_Solicitud.ToString() );
+
+                    return RedirectToAction("ServicioContratado","Servicios", new { servicioId = servicio.Id_Servicio });
+
+               
                 }
 
+                return View();
                 // TODO: Add insert logic here
 
 
-                return RedirectToAction("Index");
+                
             }
             catch
             {
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult ServicioContratado(int servicioId)
+        {
+            try
+            {
+                var _servicio = dbContext.Servicios.Where(x => x.Id_Servicio == servicioId).FirstOrDefault();
+
+                var _ServicioContratadoVM = new ServicioContratadoVM()
+                {
+                    servicio = _servicio
+                };
+
+                return View(_ServicioContratadoVM);
+            }
+            catch
+            {
+                return RedirectToAction("Inicio","Home");   
+            }
+        }
+
 
         // GET: Servicios/Edit/5
         public ActionResult Edit(int id)

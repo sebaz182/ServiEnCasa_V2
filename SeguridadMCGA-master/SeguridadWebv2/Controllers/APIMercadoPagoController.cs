@@ -50,9 +50,9 @@ namespace SeguridadWebv2.Controllers
                 items = pf.items.Select(i => new { title = i.title, quantity = i.quantity, currency_id = i.currency_id, unit_price = i.unit_price }).ToArray(),
                 back_urls = new
                 {
-                    success = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus"),
-                    failure = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus"),
-                    pending = Request.Url.DnsSafeHost + Url.RouteUrl("CheckoutStatus")
+                    success = Request.Url.DnsSafeHost + ":1230" + Url.RouteUrl("CheckoutStatus"),
+                    failure = Request.Url.DnsSafeHost + ":1230" + Url.RouteUrl("CheckoutStatus"),
+                    pending = Request.Url.DnsSafeHost + ":1230" + Url.RouteUrl("CheckoutStatus")
                 }
             };
             Hashtable preference = mp.createPreference(JsonConvert.SerializeObject(data));

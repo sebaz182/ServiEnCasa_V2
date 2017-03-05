@@ -31,6 +31,11 @@ namespace SeguridadWebv2.Controllers
             return View();
         }
 
+        public ActionResult Deudor()
+        {
+            return View();
+        }
+
         public void _generarDebito(string id, string detalle)
         {
             var _cuentaCorriente = new CuentaCorriente();
@@ -39,7 +44,7 @@ namespace SeguridadWebv2.Controllers
             _cuentaCorriente.Detalle = "Comisión por Servicio N°: " + detalle;
             _cuentaCorriente.Credito = 0;
             _cuentaCorriente.Debito = db.Comision.FirstOrDefault().ImpComision;
-            _cuentaCorriente.Fecha = DateTime.Today;
+            _cuentaCorriente.Fecha = DateTime.Now;
 
             db.CuentaCorriente.Add(_cuentaCorriente);
 
@@ -54,7 +59,7 @@ namespace SeguridadWebv2.Controllers
             _cuentaCorriente.Detalle = "Pago de Comisión MP N° " + detalle;
             _cuentaCorriente.Credito = importe;
             _cuentaCorriente.Debito = 0;
-            _cuentaCorriente.Fecha = DateTime.Today;
+            _cuentaCorriente.Fecha = DateTime.Now;
 
             db.CuentaCorriente.Add(_cuentaCorriente);
 

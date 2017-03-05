@@ -7,18 +7,20 @@ using System.Web;
 
 namespace SeguridadWebv2.Models.App
 {
-    [Table ("Comision")]
-    public class Comision
+    [Table("ComisionAuditoria")]
+    public class ComisionAuditoria
     {
-        public Comision()
+        public ComisionAuditoria()
         {
 
         }
 
         [Key]
-        public int Id_Comision { get; set; }
+        public int Id_ComisionAuditoria { get; set; }
         public decimal ImpComision { get; set; }
         public DateTime FechaAlta { get; set; }
-        public string Usuario { get; set; }
+        public string UsuarioAlta { get; set; }
+        public DateTime FechaModificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
     }
 }

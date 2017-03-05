@@ -1,4 +1,6 @@
-﻿
+﻿@using SeguridadWebv2.Models.App
+@model SeguridadWebv2.Models.ReportesVM
+
 @{
     ViewBag.Title = "Reportes";
     Layout = "~/Views/Shared/_LayoutDash.cshtml";
@@ -37,7 +39,7 @@
 </head>
 
 <body>
-   
+
     <div>
 
         <div id="page-wrapper">
@@ -83,12 +85,12 @@
                                 </div>
                             </div>
                             @*<a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>*@
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>*@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -105,12 +107,12 @@
                                 </div>
                             </div>
                             @*<a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>*@
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>*@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -127,12 +129,12 @@
                                 </div>
                             </div>
                             @*<a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>*@
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>*@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -149,12 +151,12 @@
                                 </div>
                             </div>
                             @*<a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>*@
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>*@
                         </div>
                     </div>
                 </div>
@@ -170,8 +172,8 @@
                                     <div class="flot-chart-content" id="flot-pie-chart"></div>
                                 </div>
                                 @*<div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>*@
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -183,8 +185,8 @@
                             <div class="panel-body">
                                 <div id="morris-donut-chart"></div>
                                 @*<div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>*@
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -196,45 +198,32 @@
                             <div class="panel-body">
                                 <div id="morris-bar-chart"></div>
                                 @*<div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>*@
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
                     @*<div class="col-lg-8">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Multiple Axes Line Graph Example with Tooltips and Raw Data</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="flot-chart">
-                            <div class="flot-chart-content" id="flot-multiple-axes-chart"></div>
-                        </div>
-                        <div class="text-right">
-                            <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
+                            <div class="panel panel-yellow">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Multiple Axes Line Graph Example with Tooltips and Raw Data</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="flot-chart">
+                                        <div class="flot-chart-content" id="flot-multiple-axes-chart"></div>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
                 </div>
-            </div>*@
-                </div>
+                <!-- /.row
                 <!-- /.row -->
+                <div class="row">
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-area-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    
-                    <div class="col-lg-4">
+                    <div hidden class="col-lg-4">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Line Graph Example with Tooltips</h3>
@@ -247,9 +236,177 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Ultimos Pagos!</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Id </th>
+                                                <th>Fecha de Pago</th>
+                                                <th>Hora del Pago</th>
+                                                <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                foreach (var cCorriente in Model.cuentaCorriente)
+                                                {
+                                                    if (cCorriente.Credito > 0)
+                                                    {
+                                                        <tr>
+                                                            <td>@cCorriente.Id_CtaCorriente</td>
+                                                            <td>@cCorriente.Fecha.ToShortDateString()</td>
+                                                            <td>@cCorriente.Fecha.ToShortTimeString()</td>
+                                                            <td>$ @cCorriente.Credito.ToString()</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Datos útiles de HOY!</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">@Model.solicitudes.Where(x=>x.Fecha == DateTime.Today).Count()</span>
+                                        <i class="fa fa-fw fa-calendar"></i> Solicitudes 
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">@Model.presupuestos.Where(x => x.Fecha_Vencimiento == DateTime.Today.AddDays(-3)).Count()</span>
+                                        <i class="fa fa-fw fa-comment"></i> Presupuestos
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">@Model.servicios.Where(x => x.Presupuestos.Hora == DateTime.Today).Count()</span>
+                                        <i class="fa fa-fw fa-truck"></i> Servicios
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">@{
+                                            decimal? debitosHoy = 0;
+                                            foreach (var deb in Model.cuentaCorriente.Where(x => x.Fecha == DateTime.Today))
+                                            {
+                                                debitosHoy = debitosHoy + deb.Debito;
+                                            }
+                                            @debitosHoy.ToString()
+                                        }</span>
+                                        <i class="fa fa-fw fa-money"></i> Comisiones $
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">@{
+                                            decimal? creditosHoy = 0;
+                                            foreach (var deb in Model.cuentaCorriente.Where(x => x.Fecha == DateTime.Today))
+                                            {
+                                                creditosHoy = creditosHoy + deb.Credito;
+                                            }
+                                            @creditosHoy.ToString()
+                                        }</span>
+                                        <i class="fa fa-fw fa-check"></i> Pagos $
+                                    </a>
+                                </div>
+                                <div class="text-right">
+                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.row -->
-               
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Tabla de Totales Mensuales</h3>
+                            </div>
+                            <div class="panel-body">
+                                    
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Mes </th>
+                                            <th>Total de Solicitudes</th>
+                                            <th>Total de Presupuestos</th>
+                                            <th>Total de Servicios</th>
+                                            <th>Servicios Satifactorios</th>
+                                            <th>Importe Comisión</th>
+                                            <th>Importe de Ingresos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            for (var i = 1; i <= 12; i++)
+                                            {
+                                                <tr>
+                                                     
+                                                    <td>@i</td>
+                                                    <td>@Model.solicitudes.Where(x=>x.Fecha.Month == i).Count()</td>
+                                                    <td>@Model.presupuestos.Where(x => x.Hora.Month == i).Count()</td>
+                                                    <td>@Model.servicios.Where(x => x.Presupuestos.Hora.Month == i).Count()</td>
+                                                    <td>@Model.servicios.Where(x => x.Presupuestos.Hora.Month == i && x.Estado == "Calificado").Count()</td>
+                                                    <td>@{
+                                                        decimal? debitos = 0;
+                                                        foreach (var deb in Model.cuentaCorriente.Where(x=>x.Fecha.Month == i))
+                                                        {
+                                                            debitos = debitos + deb.Debito;
+                                                        }
+                                                    } $ @debitos</td>
+                                                    <td>@{
+                                                        decimal? creditos = 0;
+                                                        foreach (var cred in Model.cuentaCorriente.Where(x => x.Fecha.Month == i))
+                                                        {
+                                                            creditos = creditos + cred.Credito;
+                                                        }
+                                                    } $ @creditos</td>
+                                                </tr>
+
+                                            }
+                                            foreach (var cCorriente in Model.cuentaCorriente)
+                                            {
+                                                if (cCorriente.Credito > 0)
+                                                {
+
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                
+                <div hidden class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-area-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- /.row -->
 
             </div>
@@ -265,5 +422,3 @@
 </body>
 
 </html>
-
-

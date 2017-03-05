@@ -152,10 +152,10 @@ namespace SeguridadWebv2.Models
         {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
-            const string nombre = "William Gustavo";
-            const string apellido = "Santisteban";
+            const string nombre = "Sebastian";
+            const string apellido = "Zeballos";
             const bool estado = true;
-            const string name = "administrador@mcga.com";
+            const string name = "admin@serviencasa.com";
             const string password = "Mcga@123456";
             const string roleName = "Admin";
 

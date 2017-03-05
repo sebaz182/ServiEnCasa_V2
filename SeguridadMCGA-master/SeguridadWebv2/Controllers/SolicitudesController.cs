@@ -119,5 +119,13 @@ namespace SeguridadWebv2.Controllers
                 return View();
             }
         }
+
+        public Solicitudes CambiaEstado(Solicitudes _solicitud)
+        {
+            _solicitud.Contador = _solicitud.Contador + 1;
+            _solicitud.Estado = "Presupuestado";
+
+            return (_solicitud);
+        }
     }
 }

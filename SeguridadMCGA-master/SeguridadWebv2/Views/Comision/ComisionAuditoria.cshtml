@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SeguridadWebv2.Models.App.ComisionAuditoria>
+@{
+    ViewBag.Title = "Auditoría de Comisiones";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Auditoría de Comisiones</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Auditoría de Comisiones</h2>
+        <p>En esta tabla podrás ver los cambios realizados a las comisiones.</p>
+        <div class="col-md-11">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Comisión Anterior</th>
+                        <th>Fecha de Alta</th>
+                        <th>Fecha de Modificación</th>
+                        <th>Usuario de Alta</th>
+                        <th>Usuario de Modificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var auditoria in Model)
+                    {
+
+                        <tr>
+                            <td>$ @auditoria.ImpComision.ToString()</td>
+                            <td>@auditoria.FechaAlta.ToShortDateString()</td>
+                            <td>@auditoria.FechaModificacion.ToShortDateString()</td>
+                            <td>@auditoria.UsuarioAlta.ToString()</td>
+                            <td>@auditoria.UsuarioModificacion.ToString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

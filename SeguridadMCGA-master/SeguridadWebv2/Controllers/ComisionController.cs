@@ -1,4 +1,5 @@
-﻿using SeguridadWebv2.Models;
+﻿using Microsoft.AspNet.Identity;
+using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace SeguridadWebv2.Controllers
             return View(db.Comision.ToList());
         }
 
+        public ActionResult ComisionAuditoria()
+        {
+            return View(db.ComisionAuditoria.ToList().OrderByDescending(x=>x.Id_ComisionAuditoria));
+        }
+
         // GET: Comision/Edit/5
         [HttpGet]
         public ActionResult Edit(int id)
@@ -38,7 +44,6 @@ namespace SeguridadWebv2.Controllers
             return View(ViewModel);
         }
 
-        // POST: Zonas/Edit/5
         [HttpPost]
         public ActionResult Edit(ComisionViewModel viewModel)
         {
@@ -47,11 +52,29 @@ namespace SeguridadWebv2.Controllers
                 if (ModelState.IsValid)
                 {
                     var ComisionN = db.Comision.Find(viewModel.id);
-                    if (viewModel.importe >= 0)
+
+                    var _comAuditoria = new ComisionAuditoria();
+                    var idUser = User.Identity.GetUserId();
+                    var usuario = db.Users.Where(x => x.Id == idUser).FirstOrDefault();
+
+                    _comAuditoria.FechaAlta = ComisionN.FechaAlta;
+                    _comAuditoria.FechaModificacion = DateTime.Now;
+                    _comAuditoria.UsuarioAlta = ComisionN.Usuario;
+                    _comAuditoria.ImpComision = ComisionN.ImpComision;
+                    _comAuditoria.UsuarioModificacion =  usuario.Nombre +" "+ usuario.Apellido;
+
+                    if (viewModel.importe >= 0 && ComisionN.ImpComision!= viewModel.importe)
                     {
                         ComisionN.ImpComision = viewModel.importe;
+                        ComisionN.Usuario = usuario.Nombre + " " + usuario.Apellido;
+
+
                         db.Entry(ComisionN).State = EntityState.Modified;
+
+                        db.ComisionAuditoria.Add(_comAuditoria);
+
                         db.SaveChanges();
+
                         return RedirectToAction("Index");
                     }
                     return View();

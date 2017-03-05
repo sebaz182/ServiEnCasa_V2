@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using SeguridadWebv2.Models;
 using SeguridadWebv2.Models.App;
+using SeguridadWebv2.Patterns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SeguridadWebv2.Controllers
     public class PresupuestosController : Controller
     {
         private ModeloContainer db = new ModeloContainer();
+        private SolicitudesController _solicitudesController = new SolicitudesController();
 
         [HttpGet]
         public ActionResult PresupuestosSolicitud(int id)
@@ -86,24 +88,24 @@ namespace SeguridadWebv2.Controllers
         }
 
         // POST: Presupuestos/Contratar
-        [HttpPost]
-        public ActionResult Contratar(int idPresupuesto)
-        {
-            try
-            {
-                var servicio = new Servicios();
-                servicio.Estado = "Contratado";
-                servicio.Presupuestos.Id_Presupuesto = idPresupuesto;
-                db.Servicios.Add(servicio);
-                db.SaveChanges();
+        //[HttpPost]
+        //public ActionResult Contratar(int idPresupuesto)
+        //{
+        //    try
+        //    {
+        //        var servicio = new Servicios();
+        //        servicio.Estado = "Contratado";
+        //        servicio.Presupuestos.Id_Presupuesto = idPresupuesto;
+        //        db.Servicios.Add(servicio);
+        //        db.SaveChanges();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return RedirectToAction("Index");
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
         // GET: Presupuestos/Create
         public ActionResult Create(int id)
@@ -114,7 +116,29 @@ namespace SeguridadWebv2.Controllers
                 Solicitud = solicitud,
                 CrearPrespuesto = new CrearPresupuestoViewModels()
             };
-            return View(presupuesto);
+
+            var idServi = User.Identity.GetUserId();
+            var servi = db.Servis.Where(x => x.Id == idServi).FirstOrDefault();
+
+            var s = new ConcreteServi(servi);
+
+            s.Attach(new ConcreteObserver());
+
+            //Changing state
+            s.ServiState = DateTime.Now;
+
+            //var obs = new ConcreteObserver(servi);
+
+            //obs.Actualizacion();
+
+            if (servi.Estado == true)
+            {
+                return View(presupuesto);
+            }
+            else
+            {
+                return RedirectToAction("Deudor","CuentaCorriente");
+            }         
         }
 
         // POST: Presupuestos/Create
@@ -126,7 +150,7 @@ namespace SeguridadWebv2.Controllers
                 var IdServi = User.Identity.GetUserId();
                 var servi = db.Servis.Where(x => x.Id == IdServi).FirstOrDefault();
                 var solicitud = db.Solicitudes.Find(viewModel.CrearPrespuesto.idSolicitud);
-                var solMod = CambiaEstado(solicitud);
+                var solMod = _solicitudesController.CambiaEstado(solicitud);
 
                 try
                 {
@@ -167,14 +191,6 @@ namespace SeguridadWebv2.Controllers
 
             return RedirectToAction("Index");
         } 
-
-        public Solicitudes CambiaEstado(Solicitudes _solicitud)
-        {
-            _solicitud.Contador = _solicitud.Contador + 1;
-            _solicitud.Estado = "Presupuestado";
-
-            return (_solicitud);
-        }
 
 
 

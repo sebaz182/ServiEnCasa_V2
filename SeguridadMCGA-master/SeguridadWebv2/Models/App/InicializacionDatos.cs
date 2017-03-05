@@ -218,7 +218,9 @@ namespace SeguridadWebv2.Models.App
             {
                  new Comision
                  {
-                    ImpComision = 45
+                    ImpComision = 45,
+                    FechaAlta = DateTime.Today,
+                    Usuario = "Sistema"
                  }
             };
             comision.ForEach(c => db.Comision.Add(c));

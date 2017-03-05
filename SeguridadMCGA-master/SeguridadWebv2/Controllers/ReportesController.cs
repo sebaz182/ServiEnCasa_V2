@@ -19,7 +19,15 @@ namespace SeguridadWebv2.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var repoVM = new ReportesVM
+            {
+                servicios = db.Servicios.ToList(),
+                pagos = db.Pagos.ToList(),
+                cuentaCorriente = db.CuentaCorriente.ToList(),
+                solicitudes = db.Solicitudes.ToList(),
+                presupuestos = db.Presupuestos.ToList()
+            };
+            return View(repoVM);
         }
     }
 }

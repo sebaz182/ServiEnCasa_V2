@@ -3,6 +3,11 @@
     ViewBag.Title = "Responder Presupuesto";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
+@*<header>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</header>*@
 
 
 <h2>Crear Presupuesto</h2>
@@ -11,7 +16,7 @@
  @Html.AntiForgeryToken()
 <div class="container">
     <div class="row">
-   x|     @Html.HiddenFor(model => model.CrearPrespuesto.idSolicitud, new { @Value = Model.Solicitud.Id_Solicitud})
+        @Html.HiddenFor(model => model.CrearPrespuesto.idSolicitud, new { @Value = Model.Solicitud.Id_Solicitud})
         <div class="col-md-12">
             @if (Model.Solicitud != null)
             {
@@ -60,7 +65,9 @@
         </div>
         <script type="text/javascript">
             $(function () {
-                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker1').datetimepicker({
+                    minDate:new Date()
+                });
             });
         </script>
     </div>
